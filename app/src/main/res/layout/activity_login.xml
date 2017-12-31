@@ -7,4 +7,5 @@
         android:layout_height="match_parent"
         tools:context="com.example.vinayakahebbar.doctorapp.activities.LoginActivity">
 
+    
 </android.support.constraint.ConstraintLayout>
