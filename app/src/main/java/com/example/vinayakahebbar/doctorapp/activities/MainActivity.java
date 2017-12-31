@@ -1,4 +1,4 @@
-package com.example.vinayakahebbar.doctorapp;
+package com.example.vinayakahebbar.doctorapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
