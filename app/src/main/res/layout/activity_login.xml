@@ -21,7 +21,6 @@
         android:text="Email"
         android:textColor="#69d6c2"
         android:textSize="40dp"
-
         android:layout_marginLeft="20dp"
 
         />
