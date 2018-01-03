@@ -1,107 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.vinayakahebbar.doctorapp.activities.LoginActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/health"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    tools:context="com.example.vinayakahebbar.doctorapp.activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
+        android:padding="10sp"
+        android:background="@drawable/border_cornor"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Email"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-
-            />
-
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/et_email"
-            android:labelFor="@+id/et_email"
-            android:inputType="textEmailAddress"
-            android:layout_marginStart="20sp"
-            android:layout_marginEnd="20sp"
-            android:background="@drawable/box_border"
             android:drawableStart="@drawable/ic_action_mail"
-            android:padding="5sp"
-
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="35dp"
-            android:text="Password"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:layout_marginTop="20sp"
+            app:hintTextAppearance="@style/TextLabel"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:id="@+id/et_email"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/et_pass"
-            android:labelFor="@+id/et_pass"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:inputType="textWebPassword"
-            android:layout_marginStart="20sp"
-            android:background="@drawable/box_border"
-            android:drawableStart="@drawable/ic_action_password"
-            android:padding="5sp" />
+            android:layout_height="wrap_content"
+            app:passwordToggleDrawable="@drawable/toggle_pass"
+            app:passwordToggleEnabled="true"
+            app:hintTextAppearance="@style/TextLabel"
+            app:passwordToggleTint="@color/colorAccent">
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_pass"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="250sp"
+            android:layout_height="50sp"
             android:id="@+id/btn_login"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:background="@color/colorAccent"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/material_selector_sky_blue"
             android:text="Login"
             android:textAllCaps="false"
-            android:textColor="#fff"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btn_new_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/btn_forget"
-                android:layout_alignBottom="@+id/btn_forget"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="22dp"
-                android:background="@null"
-                android:textColor="@color/colorAccent"
-                android:text="@string/str_new_user"
-                android:textAllCaps="false"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btn_forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:background="@null"
-                android:textColor="@color/colorAccent"
-                android:text="Forget Password"
-                android:textAllCaps="false"
-                android:textSize="18sp" />
-        </RelativeLayout>
+        <Button
+            android:layout_width="250sp"
+            android:layout_marginTop="10sp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:background="@drawable/material_selector_blue"
+            android:textColor="@color/white"
+            android:text="Sign Up"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:text="Forgot Password?"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"/>
 
     </LinearLayout>
 
