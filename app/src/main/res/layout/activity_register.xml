@@ -1,87 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/health"
-        android:orientation="vertical"
-        tools:context="com.example.vinayakahebbar.doctorapp.activities.RegisterActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/health"
+    android:orientation="vertical"
+    tools:context="com.example.vinayakahebbar.doctorapp.activities.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10sp"
+        android:padding="10sp"
+        android:background="@drawable/border_cornor"
         android:orientation="vertical"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/tv_email"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="50dp"
-            android:text="Email"
-            android:textColor="@android:color/black"
-            android:textSize="25sp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/box_border"
-            android:inputType="textEmailAddress" />
+            android:layout_marginTop="10sp"
+            app:hintTextAppearance="@style/TextLabel">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_action_mail"
+                android:id="@+id/et_reg_email"
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+        </android.support.design.widget.TextInputLayout>
 
 
-        <TextView
-            android:id="@+id/textView1"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="20dp"
-            android:text="Password"
-            android:textColor="@android:color/black"
-            android:textSize="25sp" />
+            app:hintTextAppearance="@style/TextLabel">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_action_password"
+                android:id="@+id/et_reg_pass"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/box_border"
-            android:inputType="textWebPassword" />
-
-        <TextView
-            android:id="@+id/textView2"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="20dp"
-            android:text="Confirm Password"
-            android:textColor="@android:color/black"
-            android:textSize="25dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/box_border"
-            android:inputType="textWebPassword" />
+            app:hintTextAppearance="@style/TextLabel">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_action_password"
+                android:id="@+id/et_reg_pass_conf"
+                android:inputType="textPassword"
+                android:hint="Confirm Password"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_reg"
             android:layout_width="150dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="45dp"
-            android:background="@color/colorPrimary"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/material_selector_sky_blue"
             android:layout_gravity="center"
             android:text="Register"
             android:textAllCaps="false"
-            android:textColor="@android:color/black"
+            android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>
 

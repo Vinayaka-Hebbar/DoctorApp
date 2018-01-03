@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#21b7b2</color>
     <color name="colorAccent">#0e7eab</color>
     <color name="white">#FFF</color>
+    <color name="light_white">#c8ffffff</color>
     <color name="black">#000</color>
     <color name="light_black">#74000000</color>
     <color name="colorButtonPressedAccent">#049bdc</color>
