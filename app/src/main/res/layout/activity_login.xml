@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/health"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     tools:context="com.example.vinayakahebbar.doctorapp.activities.LoginActivity">
 
     <LinearLayout
