@@ -17,4 +17,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MaterialButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorButtonPressedAccent</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
 </resources>
