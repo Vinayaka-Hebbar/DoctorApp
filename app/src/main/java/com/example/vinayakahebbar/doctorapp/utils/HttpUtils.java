@@ -24,6 +24,9 @@ public class HttpUtils {
         this.httpUrl = httpUrl;
     }
 
+    public HttpUtils() {
+    }
+
     private String httpUrl;
 
     public OnLoaded getOnLoaded() {
@@ -42,7 +45,7 @@ public class HttpUtils {
                 String response = null;
                 try {
                     if(!TextUtils.isEmpty(httpUrl)) {
-                        URL url = new URL(httpUrl);
+                        URL url = new URL(baseUrl + httpUrl);
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         // read the response
                         InputStream in = new BufferedInputStream(conn.getInputStream());
@@ -53,6 +56,11 @@ public class HttpUtils {
                     e.printStackTrace();
                 }
                 return response;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                onLoaded.Update(s);
             }
         }.execute();
     }
@@ -78,12 +86,12 @@ public class HttpUtils {
         return sb.toString();
     }
 
-    private void getHospitalLocations(){
+    public void getHospitalLocations(){
         httpUrl = "Hospital/locations.json";
         getJsonString();
     }
 
-    private void getDoctors(){
+    public void getDoctors(){
         httpUrl = "Doctors/BTM/btm.json";
         getJsonString();
     }

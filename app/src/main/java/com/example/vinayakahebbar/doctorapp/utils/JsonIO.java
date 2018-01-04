@@ -81,6 +81,6 @@ public class JsonIO {
             protected void onPostExecute(Void aVoid) {
                 onLoaded.Update(doctors);
             }
-        };
+        }.execute();
     }
 }

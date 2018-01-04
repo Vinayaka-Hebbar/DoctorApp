@@ -16,4 +16,8 @@
             android:background="#4BB5AB">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_main"/>
 </LinearLayout>

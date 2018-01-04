@@ -1,8 +1,11 @@
 package com.example.vinayakahebbar.doctorapp.activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +21,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.vinayakahebbar.doctorapp.R;
+import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.ProfileFragment;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
+import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -26,7 +33,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private LinearLayout layout;
+    private String CURRENT_TAG = "Home";
     private FragmentManager fragmentManager;
+    private FragmentType currentType;
 
     Button search;
     @Override
@@ -58,8 +67,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getFragmentManager();
     }
 
-    private void loadFragment(){
+    private void loadFragment(final FragmentType type){
+        if(currentType == type){
+            return;
+        }
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = getFragment(type);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                fragmentTransaction.replace(R.id.fragment_main,fragment,CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+    }
 
+    private Fragment getFragment(FragmentType type) {
+        currentType = type;
+        switch (type){
+            case HOME:
+                CURRENT_TAG = "Home";
+                return new  HomeFragment();
+            case PROFILE:
+                CURRENT_TAG = "Profile";
+                return new ProfileFragment();
+            case DOCTOR_LIST:
+                CURRENT_TAG = "Doctors";
+                return new DoctorsListFragment();
+        }
+        return null;
     }
 
     public void setUpDrawer(){
@@ -97,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 UserManager.sigOut();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
+                break;
+            case R.id.menu_home:
+                loadFragment(FragmentType.HOME);
+                break;
+            case R.id.menu_doctors:
+                loadFragment(FragmentType.DOCTOR_LIST);
                 break;
         }
         return false;
