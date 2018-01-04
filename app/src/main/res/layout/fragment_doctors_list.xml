@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Doctors" />
+        android:id="@+id/list_doctor"
+        android:divider="#f00"
+        android:dividerHeight="2dp"
+        android:listSelector="#0f0"/>
+
 
 </FrameLayout>
