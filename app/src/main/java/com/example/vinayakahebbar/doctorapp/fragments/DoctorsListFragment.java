@@ -22,7 +22,8 @@ import java.util.List;
  */
 public class DoctorsListFragment extends Fragment implements OnLoaded {
 
-
+    private List<Doctor> doctors;
+    private View view;
     public DoctorsListFragment() {
        HttpUtils httpUtils =  new HttpUtils();
         httpUtils.setOnLoaded(this);
@@ -34,8 +35,9 @@ public class DoctorsListFragment extends Fragment implements OnLoaded {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_doctors_list, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctors_list, container, false);
+        return view;
     }
 
     @Override
@@ -44,9 +46,15 @@ public class DoctorsListFragment extends Fragment implements OnLoaded {
         jsonIO.setOnLoaded(new OnListLoaded() {
             @Override
             public void Update(List<ModelView> lists) {
-                Doctor doctor = (Doctor) lists.get(0);
+                for(ModelView view:lists)
+                    doctors.add((Doctor)view);
+                loadList();
             }
         });
         jsonIO.getDoctorsInfo();
+    }
+
+    private void loadList() {
+
     }
 }
