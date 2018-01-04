@@ -77,4 +77,14 @@ public class HttpUtils {
         }
         return sb.toString();
     }
+
+    private void getHospitalLocations(){
+        httpUrl = "Hospital/locations.json";
+        getJsonString();
+    }
+
+    private void getDoctors(){
+        httpUrl = "Doctors/BTM/btm.json";
+        getJsonString();
+    }
 }
