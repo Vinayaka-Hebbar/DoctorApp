@@ -5,21 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:id="@+id/drawer"
     tools:openDrawer="start"
     android:fitsSystemWindows="true"
     tools:context="com.example.vinayakahebbar.doctorapp.activities.MainActivity">
 
-<android.support.design.widget.NavigationView
-    android:layout_width="wrap_content"
-    android:id="@+id/nav_view"
-    android:layout_height="match_parent"
-    app:headerLayout="@layout/header"
-    app:menu="@menu/menu_nav"
-    android:layout_gravity="start"/>
-<include layout="@layout/content_main"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"/>
+    <include layout="@layout/content_main"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/menu_nav"
+        android:layout_gravity="start"/>
 
 </android.support.v4.widget.DrawerLayout>
