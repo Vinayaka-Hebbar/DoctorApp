@@ -8,5 +8,6 @@ public enum  FragmentType {
     HOME,
     PROFILE,
     DOCTOR_LIST,
+    MAP
 
 }

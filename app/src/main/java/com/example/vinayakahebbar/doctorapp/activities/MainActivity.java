@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.MapHospitalFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.ProfileFragment;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
 import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case DOCTOR_LIST:
                 CURRENT_TAG = "Doctors";
                 return new DoctorsListFragment();
+            case MAP:
+                CURRENT_TAG = "Map";
+                return new MapHospitalFragment();
         }
         return null;
     }
