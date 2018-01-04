@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/health"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.vinayakahebbar.doctorapp.activities.ForgotActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please enter your registered email id below:"
+        android:textSize="20sp"
+        android:textColor="#161616"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="100dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/mail2"
+        android:layout_marginTop="20dp"
+        android:padding="5sp"
+        android:background="#fff"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:textSize="25dp"
+        android:background="#9fe7e2"
+        android:layout_marginTop="40dp"
+        />
+</LinearLayout>
