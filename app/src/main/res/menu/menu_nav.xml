@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
+        <item android:title="Home" android:id="@+id/menu_home"/>
         <item android:title="Profile" android:id="@+id/menu_profile" />
         <item android:title="Help" android:id="@+id/menu_help"/>
     </group>

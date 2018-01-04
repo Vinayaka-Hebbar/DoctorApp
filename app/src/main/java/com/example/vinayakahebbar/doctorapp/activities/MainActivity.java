@@ -1,5 +1,6 @@
 package com.example.vinayakahebbar.doctorapp.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private LinearLayout layout;
+    private FragmentManager fragmentManager;
 
     Button search;
     @Override
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         setUpDrawer();
+        setUpFragment();
+    }
+
+    private void setUpFragment() {
+        fragmentManager = getFragmentManager();
+    }
+
+    private void loadFragment(){
+
     }
 
     public void setUpDrawer(){
