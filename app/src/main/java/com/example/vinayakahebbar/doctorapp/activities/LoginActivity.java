@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth auth;
     private EditText editTextEmail,editTextPass;
-    private Button buttonLogin,buttonSignUp;
+    private Button buttonLogin,buttonSignUp,buttonForgot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
+        buttonForgot = (Button)findViewById(R.id.btn_forgot);
+        buttonForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
             }
         });
         editTextEmail = (EditText)findViewById(R.id.et_email);

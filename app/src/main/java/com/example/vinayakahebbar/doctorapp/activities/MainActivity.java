@@ -5,18 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentType currentType;
     private View navHeader;
     public static FragmentListener fragmentListener;
+    private boolean isBackPress = false;
 
-    Button search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,9 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_home:
                 loadFragment(FragmentType.HOME);
                 break;
-            case R.id.menu_doctors:
-                loadFragment(FragmentType.DOCTOR_LIST);
-                break;
             case R.id.menu_map:
                 loadFragment(FragmentType.MAP);
                 break;
@@ -172,6 +169,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setPageTitle() {
         getSupportActionBar().setTitle(CURRENT_TAG);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!isBackPress)
+        {
+            Snackbar.make(getCurrentFocus(),"Press again to close",Snackbar.LENGTH_SHORT).show();
+            isBackPress = true;
+            return;
+        }
+        super.onBackPressed();
     }
 }
 

@@ -4,7 +4,6 @@
         <item android:title="Home" android:id="@+id/menu_home"/>
         <item android:title="Profile" android:id="@+id/menu_profile" />
         <item android:title="Help" android:id="@+id/menu_help"/>
-        <item android:id="@+id/menu_doctors" android:title="Doctors"/>
         <item android:id="@+id/menu_map" android:title="Map"/>
     </group>
     <group android:checkableBehavior="single" android:id="@+id/group_control">
