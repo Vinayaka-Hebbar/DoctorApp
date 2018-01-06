@@ -6,5 +6,11 @@
     <string name="str_new_user">New User (Sign up)</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+    <string-array name="specialities">
+        <item>General</item>
+        <item>Children</item>
+        <item>Womens</item>
+        <item>Dentist</item>
+    </string-array>
     <string name="api_key">AIzaSyC13FpraA9aTiGLhkGXDYg4U9rJFIlsSM8</string>
 </resources>

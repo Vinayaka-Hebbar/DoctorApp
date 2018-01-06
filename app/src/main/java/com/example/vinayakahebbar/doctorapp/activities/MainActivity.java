@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_map:
                 loadFragment(FragmentType.MAP);
                 break;
+            case R.id.menu_profile:
+                loadFragment(FragmentType.PROFILE);
+                break;
         }
         drawerLayout.closeDrawers();
         return false;
