@@ -9,6 +9,7 @@ public enum  FragmentType {
     PROFILE,
     DOCTOR_LIST,
     MAP,
-    HOSPITAL_LIST
+    HOSPITAL_LIST,
+    DOCTOR_LOC
 
 }

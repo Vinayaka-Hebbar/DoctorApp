@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
 import com.example.vinayakahebbar.doctorapp.model.Doctor;
+import com.example.vinayakahebbar.doctorapp.model.DoctorLocation;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
 
@@ -69,7 +70,11 @@ public class JsonIO {
                         JSONObject object = array.getJSONObject(i);
                         String name = object.getString("DoctorName");
                         String address = object.getString("Address");
+                        String info = object.getString("Info");
+                        String spec = object.getString("Spec");
                         Doctor doctor = new Doctor(name,address);
+                        doctor.setInformation(info);
+                        doctor.setSpecialization(spec);
                         doctors.add(doctor);
                     }
                 } catch (JSONException e) {
@@ -81,6 +86,34 @@ public class JsonIO {
             @Override
             protected void onPostExecute(Void aVoid) {
                 onLoaded.Update(doctors);
+            }
+        }.execute();
+    }
+
+    public void getDoctorLocation(){
+        final List<ModelView> locations = new ArrayList<>();
+        new AsyncTask<Void, Integer, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    JSONArray array = jsonObject.getJSONArray("Items");
+                    for(int i=0;i<array.length();i++){
+                        JSONObject object = array.getJSONObject(i);
+                        String name = object.getString("Name");
+                        String path = object.getString("Path");
+                        DoctorLocation location = new DoctorLocation(name,path);
+                        locations.add(location);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                onLoaded.Update(locations);
             }
         }.execute();
     }

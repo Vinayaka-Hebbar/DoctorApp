@@ -238,7 +238,7 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
             googleMap.addMarker(new MarkerOptions().position(curLatLan).title(text).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curLatLan, 15));
         }
-        HttpUtils httpUtils = new HttpUtils(text);
+        HttpUtils httpUtils = new HttpUtils(new String[]{text});
         httpUtils.setOnLoaded(this);
         httpUtils.getHospitalLocations();
     }

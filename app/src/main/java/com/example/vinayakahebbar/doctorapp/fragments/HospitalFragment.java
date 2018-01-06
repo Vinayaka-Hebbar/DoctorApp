@@ -49,7 +49,7 @@ public class HospitalFragment extends Fragment {
     }
 
     private void setUpTabs() {
-        adapter = new TabViewAdapter(getFragmentManager());
+        adapter = new TabViewAdapter(getChildFragmentManager());
         final ListHospitalFragment listHospitalFragment = new ListHospitalFragment();
         final MapHospitalFragment mapHospitalFragment = new MapHospitalFragment();
         mapHospitalFragment.setListListener(new ListListener() {

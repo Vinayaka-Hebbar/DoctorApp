@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private Timer timer;
     private int TIMER_DELAY = 4000;
     private int TIMER_PERIOD = 3000;
-    private CardView cardViewHospital;
+    private CardView cardViewHospital,cardViewDoctor;
     private TextView[] dots;
     private View view;
     private LinearLayout layoutDots;
@@ -73,6 +73,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             @Override
             public void onClick(View v) {
                 MainActivity.fragmentListener.loadFragment(FragmentType.HOSPITAL_LIST);
+            }
+        });
+        cardViewDoctor = (CardView)view.findViewById(R.id.cv_doctor);
+        cardViewDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.fragmentListener.loadFragment(FragmentType.DOCTOR_LOC);
             }
         });
 

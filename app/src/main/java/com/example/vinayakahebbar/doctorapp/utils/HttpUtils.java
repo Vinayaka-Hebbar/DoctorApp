@@ -24,11 +24,11 @@ public class HttpUtils {
     public HttpUtils() {
     }
 
-    public HttpUtils(String param) {
+    public HttpUtils(String[] param) {
         this.param = param;
     }
 
-    private String param;
+    private String[] param;
     private String httpUrl;
 
     public OnLoaded getOnLoaded() {
@@ -40,21 +40,21 @@ public class HttpUtils {
     }
 
     private OnLoaded onLoaded;
-    public void getJsonString(){
+    public void getJsonString() {
         new AsyncTask<Void, Integer, String>() {
             @Override
             protected String doInBackground(Void... params) {
                 String response = null;
                 try {
-                    if(!TextUtils.isEmpty(param)) {
-                        URL url = new URL(baseUrl + httpUrl);
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        // read the response
-                        InputStream in = new BufferedInputStream(conn.getInputStream());
-                        response = convertStreamToString(in);
-                    }
-                }catch (Exception e)
-                {
+
+                    URL url = new URL(baseUrl + httpUrl);
+
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    // read the response
+                    InputStream in = new BufferedInputStream(conn.getInputStream());
+                    response = convertStreamToString(in);
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return response;
@@ -89,12 +89,17 @@ public class HttpUtils {
     }
 
     public void getHospitalLocations(){
-        httpUrl = "Hospital/index.php?location=" + param.replace(" ","%20");
+        httpUrl = "Hospital/index.php?location=" + param[0].replace(" ","%20");
         getJsonString();
     }
 
     public void getDoctors(){
-        httpUrl = "Doctors/BTM/btm.json";
+        httpUrl = "Doctors/"+ param[0] +"/"+param[1]+".json";
+        getJsonString();
+    }
+
+    public void getDoctorLocation(){
+        httpUrl = "Doctors/locations.json";
         getJsonString();
     }
 }

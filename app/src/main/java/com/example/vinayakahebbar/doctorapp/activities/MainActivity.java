@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
+import com.example.vinayakahebbar.doctorapp.fragments.DoctorLocationFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HospitalFragment;
@@ -98,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case HOSPITAL_LIST:
                 CURRENT_TAG = "Hospitals";
                 return new HospitalFragment();
+            case DOCTOR_LOC:
+                CURRENT_TAG="Doctors";
+                return new DoctorLocationFragment();
         }
         return null;
     }
@@ -175,8 +179,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if(!isBackPress)
         {
-            Snackbar.make(getCurrentFocus(),"Press again to close",Snackbar.LENGTH_SHORT).show();
-            isBackPress = true;
+            switch (currentType){
+                case DOCTOR_LOC:
+                    loadFragment(FragmentType.HOME);
+                    break;
+                case DOCTOR_LIST:
+                    loadFragment(FragmentType.DOCTOR_LOC);
+                    break;
+                case HOSPITAL_LIST:
+                    loadFragment(FragmentType.HOME);
+                    break;
+                case HOME:
+                    Snackbar.make(getCurrentFocus(),"Press again to close",Snackbar.LENGTH_SHORT).show();
+                    isBackPress = true;
+                    break;
+            }
             return;
         }
         super.onBackPressed();
