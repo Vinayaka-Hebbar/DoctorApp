@@ -14,4 +14,8 @@ public class UserManager {
     public static void sigOut(){
         auth.signOut();
     }
+
+    public static String getUserName(){
+       return auth.getCurrentUser().getEmail();
+    }
 }

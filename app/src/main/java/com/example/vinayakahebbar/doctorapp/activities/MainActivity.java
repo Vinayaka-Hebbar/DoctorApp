@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
@@ -19,16 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.HospitalFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.MapHospitalFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.ProfileFragment;
+import com.example.vinayakahebbar.doctorapp.interfaces.FragmentListener;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
 import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FragmentListener {
     private DrawerLayout drawerLayout;
     private DrawerArrowDrawable arrowDrawable;
     private NavigationView navigationView;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String CURRENT_TAG = "Home";
     private FragmentManager fragmentManager;
     private FragmentType currentType;
+    private View navHeader;
+    public static FragmentListener fragmentListener;
 
     Button search;
     @Override
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         arrowDrawable = new DrawerArrowDrawable(this);
         toolbar.setNavigationIcon(arrowDrawable);
-
+        fragmentListener = this;
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,26 +66,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         setUpDrawer();
         setUpFragment();
+        setUpUser();
+    }
+
+    private void setUpUser() {
+        navHeader = navigationView.getHeaderView(0);
+        TextView textViewUser = (TextView)navHeader.findViewById(R.id.tv_header_user);
+        textViewUser.setText(UserManager.getUserName());
     }
 
     private void setUpFragment() {
         fragmentManager = getFragmentManager();
-    }
-
-    private void loadFragment(final FragmentType type){
-        if(currentType == type){
-            return;
-        }
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                Fragment fragment = getFragment(type);
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                fragmentTransaction.replace(R.id.fragment_main,fragment,CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        });
+        loadFragment(FragmentType.HOME);
     }
 
     private Fragment getFragment(FragmentType type) {
@@ -99,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case MAP:
                 CURRENT_TAG = "Map";
                 return new MapHospitalFragment();
+            case HOSPITAL_LIST:
+                CURRENT_TAG = "Hospitals";
+                return new HospitalFragment();
         }
         return null;
     }
@@ -145,8 +144,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_doctors:
                 loadFragment(FragmentType.DOCTOR_LIST);
                 break;
+            case R.id.menu_map:
+                loadFragment(FragmentType.MAP);
+                break;
         }
+        drawerLayout.closeDrawers();
         return false;
+    }
+
+    @Override
+    public void loadFragment(final FragmentType type) {
+        if(currentType == type){
+            return;
+        }
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = getFragment(type);
+                setPageTitle();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                fragmentTransaction.replace(R.id.fragment_main,fragment,CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+    }
+
+    private void setPageTitle() {
+        getSupportActionBar().setTitle(CURRENT_TAG);
     }
 }
 

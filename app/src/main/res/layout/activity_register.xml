@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_margin="10sp"
         android:padding="10sp"
-        android:background="@drawable/border_cornor"
+        android:background="@drawable/border_corner"
         android:orientation="vertical"
         android:weightSum="1">
 

@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/nav_view"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/header"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu_nav"
         android:layout_gravity="start"/>
 

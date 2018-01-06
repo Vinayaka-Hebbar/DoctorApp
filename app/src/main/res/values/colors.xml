@@ -7,5 +7,7 @@
     <color name="light_white">#c8ffffff</color>
     <color name="black">#000</color>
     <color name="light_black">#74000000</color>
+    <color name="dim_white">#cfffffff</color>
     <color name="colorButtonPressedAccent">#049bdc</color>
+    <color name="red_light">#ff5252</color>
 </resources>

@@ -20,13 +20,15 @@ import java.net.URL;
 public class HttpUtils {
     private static final String baseUrl = "http://learncodes.co.in/doctor/";
 
-    public HttpUtils(String httpUrl) {
-        this.httpUrl = httpUrl;
-    }
 
     public HttpUtils() {
     }
 
+    public HttpUtils(String param) {
+        this.param = param;
+    }
+
+    private String param;
     private String httpUrl;
 
     public OnLoaded getOnLoaded() {
@@ -44,7 +46,7 @@ public class HttpUtils {
             protected String doInBackground(Void... params) {
                 String response = null;
                 try {
-                    if(!TextUtils.isEmpty(httpUrl)) {
+                    if(!TextUtils.isEmpty(param)) {
                         URL url = new URL(baseUrl + httpUrl);
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         // read the response
@@ -87,7 +89,7 @@ public class HttpUtils {
     }
 
     public void getHospitalLocations(){
-        httpUrl = "Hospital/locations.json";
+        httpUrl = "Hospital/index.php?location=" + param.replace(" ","%20");
         getJsonString();
     }
 

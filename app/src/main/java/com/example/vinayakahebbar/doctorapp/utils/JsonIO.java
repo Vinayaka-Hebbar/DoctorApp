@@ -3,9 +3,8 @@ package com.example.vinayakahebbar.doctorapp.utils;
 import android.os.AsyncTask;
 
 import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
 import com.example.vinayakahebbar.doctorapp.model.Doctor;
-import com.example.vinayakahebbar.doctorapp.model.HospitalLocation;
+import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
 
 import org.json.JSONArray;
@@ -40,7 +39,9 @@ public class JsonIO {
                         JSONObject object = array.getJSONObject(i);
                         String name = object.getString("Name");
                         String address = object.getString("Address");
-                        HospitalLocation location = new HospitalLocation(name,address);
+                        double lan = Double.parseDouble(object.getString("Lan"));
+                        double lat = Double.parseDouble(object.getString("Lat"));
+                        Hospital location = new Hospital(name,address,lat,lan);
                         locations.add(location);
                     }
                 } catch (JSONException e) {
