@@ -11,15 +11,21 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.activities.MainActivity;
+import com.example.vinayakahebbar.doctorapp.adapter.GridViewAdapter;
 import com.example.vinayakahebbar.doctorapp.adapter.ViewPageAdapter;
 import com.example.vinayakahebbar.doctorapp.interfaces.FragmentListener;
+import com.example.vinayakahebbar.doctorapp.model.GridModel;
 import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
+import com.example.vinayakahebbar.doctorapp.utils.type.GridType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,7 +39,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private Timer timer;
     private int TIMER_DELAY = 4000;
     private int TIMER_PERIOD = 3000;
-    private CardView cardViewHospital,cardViewDoctor;
+    private GridView gridView;
+    private GridViewAdapter gridViewAdapter;
+    private List<GridModel> list;
     private TextView[] dots;
     private View view;
     private LinearLayout layoutDots;
@@ -48,6 +56,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 R.drawable.research,
                 R.drawable.clinic
         };
+        list = new ArrayList<>();
     }
 
 
@@ -63,27 +72,18 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         viewPager.addOnPageChangeListener(this);
         initializeDots();
         setUpAnimation();
-        setUpCardView();
+        setUpGridView();
         return view;
     }
 
-    private void setUpCardView() {
-        cardViewHospital = (CardView) view.findViewById(R.id.cv_hospital);
-        cardViewHospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.fragmentListener.loadFragment(FragmentType.HOSPITAL_LIST);
-            }
-        });
-        cardViewDoctor = (CardView)view.findViewById(R.id.cv_doctor);
-        cardViewDoctor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.fragmentListener.loadFragment(FragmentType.DOCTOR_LOC);
-            }
-        });
-
+    private void setUpGridView() {
+        gridView=(GridView)view.findViewById(R.id.grid_view_main);
+        list.add(new GridModel("Find Hospital",R.mipmap.ic_hospital, GridType.FRAGMENT));
+        list.add(new GridModel("Find Doctor",R.mipmap.ic_doctor,GridType.FRAGMENT));
+        gridViewAdapter = new GridViewAdapter(view.getContext(),R.layout.grid_view_item,list);
+        gridView.setAdapter(gridViewAdapter);
     }
+
 
     private void setUpAnimation() {
         final Handler handler =  new Handler();
