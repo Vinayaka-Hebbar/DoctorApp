@@ -10,15 +10,18 @@ import com.example.vinayakahebbar.doctorapp.utils.type.PatientType;
 public class Patient {
     private int age;
 
-    public Patient(int age, String spec, PatientType info, Gender gender) {
+    public Patient(int age, String spec,String info, PatientType type, Gender gender) {
         this.age = age;
         this.spec = spec;
         this.info = info;
+        this.type = type;
         this.gender = gender;
     }
 
     private String spec;
-    private PatientType info;
+    private PatientType type;
+
+    private String info;
     private Gender gender;
 
     public String getSpec() {
@@ -49,6 +52,23 @@ public class Patient {
         this.age = age;
     }
 
+    public PatientType getType() {
+        return type;
+    }
+
+    public void setType(PatientType type) {
+        this.type = type;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+
     public Patient(){
 
     }
@@ -56,13 +76,5 @@ public class Patient {
     @Override
     public String toString() {
         return age + "";
-    }
-
-    public PatientType getInfo() {
-        return info;
-    }
-
-    public void setInfo(PatientType info) {
-        this.info = info;
     }
 }

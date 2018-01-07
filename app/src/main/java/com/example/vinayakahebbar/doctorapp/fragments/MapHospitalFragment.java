@@ -81,11 +81,8 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
     private String curLocation;
     private LinearLayout layout;
     private boolean moveCamera;
-
-
     private ListListener listListener;
     private MapRouteDrawer mapRouteDrawer;
-
     public MapHospitalFragment() {
         // Required empty public constructor
 

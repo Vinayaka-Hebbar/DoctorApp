@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
         new KeyboardHelper().hideKeyboard(this,getCurrentFocus());
+        dialog.setCancelable(false);
         dialog.show();
         auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

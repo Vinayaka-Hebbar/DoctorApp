@@ -14,6 +14,19 @@
             android:id="@+id/menu_help"
             android:icon="@drawable/ic_action_help"/>
     </group>
+    <group android:id="@+id/group_actions" android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_share"
+            android:title="Share App"
+            android:icon="@drawable/ic_action_share"/>
+        <item
+            android:id="@+id/menu_emergency"
+            android:title="Emergency Contact"/>
+        <item
+            android:id="@+id/menu_rate_us"
+            android:title="Rate Us"/>
+
+    </group>
     <group android:checkableBehavior="single" android:id="@+id/group_control">
         <item
             android:id="@+id/menu_logout"

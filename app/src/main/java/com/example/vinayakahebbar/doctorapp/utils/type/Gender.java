@@ -6,5 +6,6 @@ package com.example.vinayakahebbar.doctorapp.utils.type;
 
 public enum  Gender {
     MALE,
-    FEMALE
+    FEMALE,
+    NONE
 }

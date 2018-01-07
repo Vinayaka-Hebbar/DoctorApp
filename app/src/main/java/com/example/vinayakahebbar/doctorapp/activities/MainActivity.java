@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         drawerLayout.closeDrawers();
+        item.setChecked(true);
         return false;
     }
 

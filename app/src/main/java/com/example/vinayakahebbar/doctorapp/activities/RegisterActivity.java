@@ -66,7 +66,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         new KeyboardHelper().hideKeyboard(this,getCurrentFocus());
+        dialog.setCancelable(false);
         dialog.show();
+
+
         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

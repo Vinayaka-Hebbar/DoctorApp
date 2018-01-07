@@ -10,10 +10,6 @@ import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
 
-/**
- * Created by Vinayaka Hebbar on 05-01-2018.
- */
-
 public class ViewPageAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater inflater;

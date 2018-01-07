@@ -18,10 +18,4 @@ public class DirectionHelper {
         return DirectionHelper.DIRECTION_API + orgLatLng.latitude + "," + orgLatLng.longitude
                 + "&destination=" + destLatLng.latitude + "," + destLatLng.longitude + "&key=" + API_KEY;
     }
-
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
 }
