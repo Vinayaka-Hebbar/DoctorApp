@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name">Doctor App</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="help">Help is on the <u>way</u></string>
     <string name="str_new_user">New User (Sign up)</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
     <string-array name="specialities">
         <item>General</item>
-        <item>Children</item>
-        <item>Womens</item>
+        <item>Children\'s</item>
+        <item>Women\'s</item>
         <item>Dentist</item>
     </string-array>
     <string name="api_key">AIzaSyC13FpraA9aTiGLhkGXDYg4U9rJFIlsSM8</string>

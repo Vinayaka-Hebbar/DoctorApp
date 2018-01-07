@@ -1,5 +1,7 @@
 package com.example.vinayakahebbar.doctorapp.utils;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -17,5 +19,10 @@ public class UserManager {
 
     public static String getUserName(){
        return auth.getCurrentUser().getEmail();
+    }
+
+    @NonNull
+    public static String getUserId(){
+        return auth.getCurrentUser().getUid();
     }
 }

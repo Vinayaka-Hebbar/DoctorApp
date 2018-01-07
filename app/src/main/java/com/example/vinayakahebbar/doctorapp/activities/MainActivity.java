@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorLocationFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.HelpFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HospitalFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.MapHospitalFragment;
@@ -93,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case DOCTOR_LIST:
                 CURRENT_TAG = "Doctors";
                 return new DoctorsListFragment();
-            case MAP:
-                CURRENT_TAG = "Map";
-                return new MapHospitalFragment();
+            case HELP:
+                CURRENT_TAG = "Help";
+                return new HelpFragment();
             case HOSPITAL_LIST:
                 CURRENT_TAG = "Hospitals";
                 return new HospitalFragment();
@@ -145,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_home:
                 loadFragment(FragmentType.HOME);
                 break;
-            case R.id.menu_map:
-                loadFragment(FragmentType.MAP);
+            case R.id.menu_help:
+                loadFragment(FragmentType.HELP);
                 break;
             case R.id.menu_profile:
                 loadFragment(FragmentType.PROFILE);
@@ -190,6 +191,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loadFragment(FragmentType.DOCTOR_LOC);
                     break;
                 case HOSPITAL_LIST:
+                    loadFragment(FragmentType.HOME);
+                    break;
+                case PROFILE:
+                    loadFragment(FragmentType.HOME);
+                    break;
+                case HELP:
                     loadFragment(FragmentType.HOME);
                     break;
                 case HOME:
