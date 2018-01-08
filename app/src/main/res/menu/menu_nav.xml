@@ -21,9 +21,11 @@
             android:icon="@drawable/ic_action_share"/>
         <item
             android:id="@+id/menu_emergency"
+            android:icon="@drawable/ic_action_emergency"
             android:title="Emergency Contact"/>
         <item
             android:id="@+id/menu_rate_us"
+            android:icon="@drawable/ic_action_like"
             android:title="Rate Us"/>
 
     </group>

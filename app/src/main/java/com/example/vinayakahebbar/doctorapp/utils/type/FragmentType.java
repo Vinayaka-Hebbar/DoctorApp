@@ -4,12 +4,23 @@ package com.example.vinayakahebbar.doctorapp.utils.type;
  * Created by Vinayaka Hebbar on 04-01-2018.
  */
 
-public enum  FragmentType {
-    HOME,
-    PROFILE,
-    DOCTOR_LIST,
-    HELP,
-    HOSPITAL_LIST,
-    DOCTOR_LOC
+public class  FragmentType extends ViewType {
+    public static final int HOME = 1;
+    public static final int PROFILE = 6;
+    public static final int HOSPITAL=2;
+    public static final int DOC=3;
+    public static final int DOC_LIST=8;
+    public static final int HELP=7;
 
+    private int type;
+
+    public FragmentType(int type) {
+        super(type);
+        this.type = type;
+    }
+
+    @Override
+    public int getType() {
+        return type;
+    }
 }

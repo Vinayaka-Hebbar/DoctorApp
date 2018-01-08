@@ -30,7 +30,9 @@ import com.example.vinayakahebbar.doctorapp.fragments.MapHospitalFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.ProfileFragment;
 import com.example.vinayakahebbar.doctorapp.interfaces.FragmentListener;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
+import com.example.vinayakahebbar.doctorapp.utils.dialogs.RateUsDialog;
 import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
+import com.example.vinayakahebbar.doctorapp.utils.type.ViewType;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FragmentListener {
     private DrawerLayout drawerLayout;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LinearLayout layout;
     private String CURRENT_TAG = "Home";
     private FragmentManager fragmentManager;
-    private FragmentType currentType;
+    private int currentType;
     private View navHeader;
     public static FragmentListener fragmentListener;
     private boolean isBackPress = false;
@@ -82,25 +84,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadFragment(FragmentType.HOME);
     }
 
-    private Fragment getFragment(FragmentType type) {
+    private Fragment getFragment(int type) {
         currentType = type;
-        switch (type){
-            case HOME:
+        switch (currentType){
+            case FragmentType.HOME:
                 CURRENT_TAG = "Home";
                 return new  HomeFragment();
-            case PROFILE:
+            case FragmentType.PROFILE:
                 CURRENT_TAG = "Profile";
                 return new ProfileFragment();
-            case DOCTOR_LIST:
+            case FragmentType.DOC_LIST:
                 CURRENT_TAG = "Doctors";
                 return new DoctorsListFragment();
-            case HELP:
+            case FragmentType.HELP:
                 CURRENT_TAG = "Help";
                 return new HelpFragment();
-            case HOSPITAL_LIST:
+            case FragmentType.HOSPITAL:
                 CURRENT_TAG = "Hospitals";
                 return new HospitalFragment();
-            case DOCTOR_LOC:
+            case FragmentType.DOC:
                 CURRENT_TAG="Doctors";
                 return new DoctorLocationFragment();
         }
@@ -152,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_profile:
                 loadFragment(FragmentType.PROFILE);
                 break;
+            case R.id.menu_rate_us:
+                new RateUsDialog(this).showRateUs();
+                break;
         }
         drawerLayout.closeDrawers();
         item.setChecked(true);
@@ -159,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void loadFragment(final FragmentType type) {
+    public void loadFragment(final int type) {
         if(currentType == type){
             return;
         }
@@ -185,22 +190,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!isBackPress)
         {
             switch (currentType){
-                case DOCTOR_LOC:
+                case FragmentType.DOC:
                     loadFragment(FragmentType.HOME);
                     break;
-                case DOCTOR_LIST:
-                    loadFragment(FragmentType.DOCTOR_LOC);
+                case FragmentType.DOC_LIST:
+                    loadFragment(FragmentType.DOC);
                     break;
-                case HOSPITAL_LIST:
+                case FragmentType.HOSPITAL:
                     loadFragment(FragmentType.HOME);
                     break;
-                case PROFILE:
+                case FragmentType.PROFILE:
                     loadFragment(FragmentType.HOME);
                     break;
-                case HELP:
+                case FragmentType.HELP:
                     loadFragment(FragmentType.HOME);
                     break;
-                case HOME:
+                case FragmentType.HOME:
                     Snackbar.make(getCurrentFocus(),"Press again to close",Snackbar.LENGTH_SHORT).show();
                     isBackPress = true;
                     break;

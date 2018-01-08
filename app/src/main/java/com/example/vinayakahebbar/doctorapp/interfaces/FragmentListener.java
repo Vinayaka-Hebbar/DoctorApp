@@ -7,5 +7,5 @@ import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
  */
 
 public interface FragmentListener {
-    public void loadFragment(FragmentType type);
+    public void loadFragment(int type);
 }

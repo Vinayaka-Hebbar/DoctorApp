@@ -10,4 +10,6 @@
     <color name="dim_white">#cfffffff</color>
     <color name="colorButtonPressedAccent">#049bdc</color>
     <color name="red_light">#ff5252</color>
+    <color name="green">#14ce14</color>
+    <color name="dim_gray">#b5dcdcdc</color>
 </resources>
