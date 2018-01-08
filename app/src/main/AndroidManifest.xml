@@ -44,8 +44,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.ForgotPasswordActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.BloodBankActivity" />
+        <activity android:name=".activities.SelfCareActivity"></activity>
     </application>
 
 </manifest>

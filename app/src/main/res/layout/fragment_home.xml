@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/dim_gray"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -32,16 +33,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:background="@color/dim_white"
+            android:layout_margin="5sp"
             android:orientation="vertical">
 
             <GridView
                 android:id="@+id/grid_view_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:numColumns="@integer/num_column"
-                android:padding="10sp"/>
+                android:horizontalSpacing="5sp"
+                android:verticalSpacing="5sp"
+                android:numColumns="@integer/num_column"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

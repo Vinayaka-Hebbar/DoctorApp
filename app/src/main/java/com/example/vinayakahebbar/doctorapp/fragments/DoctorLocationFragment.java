@@ -82,6 +82,6 @@ public class DoctorLocationFragment extends Fragment implements OnLoaded, OnList
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         DoctorLocation location= (DoctorLocation)parent.getItemAtPosition(position);
         new FragmentParam(new String[]{location.getName(),location.getPath()});
-        MainActivity.fragmentListener.loadFragment(FragmentType.DOCTOR_LIST);
+        MainActivity.fragmentListener.loadFragment(FragmentType.DOC_LIST);
     }
 }

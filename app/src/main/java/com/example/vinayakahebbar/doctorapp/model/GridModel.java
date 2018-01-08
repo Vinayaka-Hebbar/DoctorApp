@@ -11,6 +11,12 @@ public class GridModel {
     private int resourceId;
     private GridType type;
 
+    public int getViewType() {
+        return viewType;
+    }
+
+    private int viewType;
+
     public String getText() {
         return text;
     }
@@ -23,10 +29,10 @@ public class GridModel {
         return type;
     }
 
-    public GridModel(String text, int resourceId, GridType type) {
+    public GridModel(String text, int resourceId, GridType type, int viewType) {
         this.text = text;
         this.resourceId = resourceId;
         this.type = type;
-
+        this.viewType = viewType;
     }
 }
