@@ -1,7 +1,9 @@
 package com.example.vinayakahebbar.doctorapp.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.vinayakahebbar.doctorapp.activities.BloodBankActivity;
 import com.example.vinayakahebbar.doctorapp.activities.SelfCareActivity;
@@ -27,5 +29,6 @@ public class ActivityManager {
                 context.startActivity(new Intent(context, SelfCareActivity.class));
                 break;
         }
+        ((Activity)context).overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 }
