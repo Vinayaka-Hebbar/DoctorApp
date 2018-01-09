@@ -31,6 +31,7 @@ import com.example.vinayakahebbar.doctorapp.fragments.ProfileFragment;
 import com.example.vinayakahebbar.doctorapp.interfaces.FragmentListener;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
 import com.example.vinayakahebbar.doctorapp.utils.dialogs.RateUsDialog;
+import com.example.vinayakahebbar.doctorapp.utils.dialogs.ShareDialog;
 import com.example.vinayakahebbar.doctorapp.utils.type.FragmentType;
 import com.example.vinayakahebbar.doctorapp.utils.type.ViewType;
 
@@ -150,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_help:
                 loadFragment(FragmentType.HELP);
+                break;
+            case R.id.menu_share:
+               new ShareDialog(this).show();
                 break;
             case R.id.menu_profile:
                 loadFragment(FragmentType.PROFILE);
