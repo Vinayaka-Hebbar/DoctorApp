@@ -13,10 +13,6 @@ import com.example.vinayakahebbar.doctorapp.model.GridModel;
 
 import java.util.List;
 
-/**
- * Created by lenovo on 07-01-2018.
- */
-
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
     private int resource;

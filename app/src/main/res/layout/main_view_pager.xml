@@ -9,4 +9,10 @@
         android:contentDescription="Doctors"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_view_pager"
+        android:textColor="#fff"
+        android:textStyle="bold|italic"/>
 </RelativeLayout>

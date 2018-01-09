@@ -79,6 +79,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         return view;
     }
 
+
     private void setUpGridView() {
         gridView=(GridView)view.findViewById(R.id.grid_view_main);
         list.add(new GridModel("Find Hospital",R.mipmap.ic_hospital, GridType.FRAGMENT, FragmentType.HOSPITAL));
@@ -89,8 +90,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         gridView.setOnItemClickListener(this);
         gridView.setAdapter(gridViewAdapter);
     }
-
-
     private void setUpAnimation() {
         final Handler handler =  new Handler();
         final Runnable runnableUpdate = new Runnable() {
