@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,14 +22,19 @@ public class ShareDialog {
         builder.setPositiveButton("Share", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
                 try {
-                    context.startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                   Toast.makeText(context,"Whatsapp is not installed",Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "My app name");
+                    String strShareMessage = "\nLet me recommend you this application\n\n";
+                    strShareMessage = strShareMessage + "https://play.google.com/store/apps/details?id=" + context.getPackageName();
+                    Uri screenshotUri = Uri.parse("android.resource://packagename/drawable/image_name");
+                    i.setType("image/png");
+                    i.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+                    i.putExtra(Intent.EXTRA_TEXT, strShareMessage);
+                   context.startActivity(Intent.createChooser(i, "Share via"));
+                } catch(Exception e) {
+                    //e.toString();
                 }
             }
         });
