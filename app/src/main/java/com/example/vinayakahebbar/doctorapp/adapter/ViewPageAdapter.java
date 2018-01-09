@@ -25,6 +25,7 @@ public class ViewPageAdapter extends PagerAdapter {
     }
 
     int[] resources;
+
     @Override
     public int getCount() {
         return resources.length;

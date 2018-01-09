@@ -116,9 +116,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextColor(ContextCompat.getColor(view.getContext(),R.color.dim_white));
             dots[i].setTextSize(30);
-            layoutDots.addView(dots[i]);
+           layoutDots.addView(dots[i]);
         }
         dots[0].setTextColor(ContextCompat.getColor(view.getContext(),R.color.colorAccent));
+        dots[0].setTextSize(34);
 
     }
 
@@ -134,6 +135,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             dots[i].setTextColor(ContextCompat.getColor(view.getContext(),R.color.dim_white));
         }
         dots[position].setTextColor(ContextCompat.getColor(view.getContext(),R.color.colorAccent));
+        dots[position].setTextSize(34);
     }
 
     @Override
