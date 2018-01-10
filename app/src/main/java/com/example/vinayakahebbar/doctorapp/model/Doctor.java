@@ -19,6 +19,16 @@ public class Doctor extends ModelView {
     private String specialization;
     private String information;
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
     public Doctor(String name, String address) {
         this.name = name;
         this.address = address;
