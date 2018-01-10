@@ -17,7 +17,6 @@
             android:layout_height="50sp"
             android:id="@+id/img_doc_list"
             android:layout_alignParentTop="true" />
-
         <TextView
             android:id="@+id/tv_doc_name"
             android:layout_width="match_parent"
