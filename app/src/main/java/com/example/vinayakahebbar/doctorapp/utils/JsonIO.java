@@ -79,7 +79,9 @@ public class JsonIO {
                         String address = object.getString("Address");
                         String info = object.getString("Info");
                         String spec = object.getString("Spec");
+                        String imgUrl = HttpUtils.BASE_URL + "Doctors" + object.getString("ImgPath").replace('\\','/');
                         Doctor doctor = new Doctor(name,address);
+                        doctor.setImgUrl(imgUrl);
                         doctor.setInformation(info);
                         doctor.setSpecialization(spec);
                         doctors.add(doctor);
