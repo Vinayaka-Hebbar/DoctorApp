@@ -70,7 +70,7 @@ public class DoctorLocationFragment extends Fragment implements OnLoaded, OnList
     }
 
     @Override
-    public void Update(List<ModelView> lists) {
+    public void UpdateList(List<ModelView> lists) {
         for (ModelView view :
                 lists) {
             locations.add((DoctorLocation) view);

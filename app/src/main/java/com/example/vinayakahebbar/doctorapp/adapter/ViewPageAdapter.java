@@ -13,9 +13,9 @@ import com.example.vinayakahebbar.doctorapp.R;
 public class ViewPageAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater inflater;
-    String array[]={"The six best Doctors:Sunshine,water,Rest,Air,Exercise and Diet",
+    private String array[]={"The six best Doctors:\nSunshine,water,Rest,Air,Exercise and Diet",
                     "The best Doctor gives the least Medicines",
-                     "Medicine is a science of Uncertainity and an art of Probability",
+                     "Medicine is a science of Uncertainty and an art of Probability",
                      "An apple a day keeps the doctor away but if the Doctor is cute forget the fruit"};
 
     public ViewPageAdapter(Context context, int[] resources) {

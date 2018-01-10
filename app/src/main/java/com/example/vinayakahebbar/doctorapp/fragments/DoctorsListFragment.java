@@ -76,7 +76,7 @@ public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterVie
         JsonIO jsonIO =  new JsonIO(text);
         jsonIO.setOnLoaded(new OnListLoaded() {
             @Override
-            public void Update(List<ModelView> lists) {
+            public void UpdateList(List<ModelView> lists) {
                 for(ModelView view:lists)
                     doctors.add((Doctor)view);
                 adapter.notifyDataSetChanged();

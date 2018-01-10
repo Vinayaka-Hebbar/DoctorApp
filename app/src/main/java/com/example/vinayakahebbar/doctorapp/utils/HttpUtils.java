@@ -1,7 +1,6 @@
 package com.example.vinayakahebbar.doctorapp.utils;
 
 import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
 
@@ -18,7 +17,7 @@ import java.net.URL;
  */
 
 public class HttpUtils {
-    private static final String baseUrl = "http://learncodes.co.in/doctor/";
+    public static final String BASE_URL = "http://learncodes.co.in/doctor/";
 
 
     public HttpUtils() {
@@ -47,7 +46,7 @@ public class HttpUtils {
                 String response = null;
                 try {
 
-                    URL url = new URL(baseUrl + httpUrl);
+                    URL url = new URL(BASE_URL + httpUrl);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     // read the response
@@ -100,6 +99,21 @@ public class HttpUtils {
 
     public void getDoctorLocation(){
         httpUrl = "Doctors/locations.json";
+        getJsonString();
+    }
+
+    public void getSelfCareInfo(){
+        httpUrl = "SelfCare/topics.json";
+        getJsonString();
+    }
+
+    public void getBloodBankInfo(){
+        httpUrl = "BloodBank/index.php?location=" + param[0].replace(" ","%20");
+        getJsonString();
+    }
+
+    public void getBloodBankLocations() {
+        httpUrl = "BloodBank/locations.json";
         getJsonString();
     }
 }

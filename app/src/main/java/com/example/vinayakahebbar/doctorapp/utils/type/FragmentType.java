@@ -11,6 +11,7 @@ public class  FragmentType extends ViewType {
     public static final int DOC=3;
     public static final int DOC_LIST=8;
     public static final int HELP=7;
+    public static final int EMERGENCY = 9;
 
     private int type;
 

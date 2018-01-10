@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.vinayakahebbar.doctorapp.activities.BloodBankActivity">
-
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorAccent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/toolbar_blood_bank"
+            android:layout_height="?attr/actionBarSize">
+            <Spinner
+                android:layout_width="@dimen/dim_spinner"
+                android:layout_height="?attr/actionBarSize"
+                android:spinnerMode="dropdown"
+                android:id="@+id/spinner_blood_bank"/>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:paddingStart="5sp"
+        android:background="@color/dim_gray"
+        android:paddingEnd="5sp"
+        android:divider="@android:color/transparent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_blood_bank"/>
+</LinearLayout>

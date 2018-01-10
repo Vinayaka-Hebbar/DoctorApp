@@ -1,12 +1,17 @@
 package com.example.vinayakahebbar.doctorapp.utils;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
+import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
+import com.example.vinayakahebbar.doctorapp.model.BloodBank;
+import com.example.vinayakahebbar.doctorapp.model.BloodBankLocation;
 import com.example.vinayakahebbar.doctorapp.model.Doctor;
 import com.example.vinayakahebbar.doctorapp.model.DoctorLocation;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
+import com.example.vinayakahebbar.doctorapp.model.SelfCareModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +39,7 @@ public class JsonIO {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
+                    if(TextUtils.isEmpty(jsonString))return null;
                     JSONObject jsonObject = new JSONObject(jsonString);
                     JSONArray array = jsonObject.getJSONArray("Items");
                     for (int i=0;i<array.length();i++) {
@@ -53,7 +59,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.Update(locations);
+                onLoaded.UpdateList(locations);
             }
         }.execute();
     }
@@ -64,6 +70,7 @@ public class JsonIO {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
+                    if(TextUtils.isEmpty(jsonString))return null;
                     JSONObject jsonObject = new JSONObject(jsonString);
                     JSONArray array = jsonObject.getJSONArray("Items");
                     for(int i=0;i<array.length();i++){
@@ -85,7 +92,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.Update(doctors);
+                onLoaded.UpdateList(doctors);
             }
         }.execute();
     }
@@ -96,6 +103,7 @@ public class JsonIO {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
+                    if(TextUtils.isEmpty(jsonString))return null;
                     JSONObject jsonObject = new JSONObject(jsonString);
                     JSONArray array = jsonObject.getJSONArray("Items");
                     for(int i=0;i<array.length();i++){
@@ -113,8 +121,99 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.Update(locations);
+                onLoaded.UpdateList(locations);
             }
         }.execute();
     }
+
+    public void getSelfCareInfo(){
+        final List<ModelView> info = new ArrayList<>();
+        new AsyncTask<Void, Integer, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    JSONArray array = jsonObject.getJSONArray("Items");
+                    for (int i=0;i<array.length();i++){
+                        JSONObject object = array.getJSONObject(i);
+                        String topic = object.getString("Topic");
+                        String img = HttpUtils.BASE_URL + "SelfCare" + object.getString("Img");
+                        String shortDesc = object.getString("ShortDes");
+                        SelfCareModel model = new SelfCareModel(topic,img.replace('\\','/'),shortDesc,"");
+                        info.add(model);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                onLoaded.UpdateList(info);
+            }
+        }.execute();
+    }
+
+    public void getBloodBankInfo(){
+        final List<ModelView> info = new ArrayList<>();
+        new AsyncTask<Void, Integer, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if(TextUtils.isEmpty(jsonString))return null;
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    JSONArray array = jsonObject.getJSONArray("Items");
+                    for(int i=0;i< array.length();i++){
+                        JSONObject object = array.getJSONObject(i);
+                        String name = object.getString("Name");
+                        String address = object.getString("Address");
+                        String phoneNo = object.getString("PhoneNo");
+                        String timing = object.getString("Time");
+                        BloodBank model = new BloodBank(name,phoneNo,address,timing);
+                        info.add(model);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                onLoaded.UpdateList(info);
+            }
+        }.execute();
+    }
+
+    public void getBloodBankLocations(){
+        final List<ModelView> locations = new ArrayList<>();
+        new AsyncTask<Void, Integer, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if(TextUtils.isEmpty(jsonString))return null;
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    JSONArray array = jsonObject.getJSONArray("Items");
+                    for(int i=0;i<array.length();i++){
+                        JSONObject object = array.getJSONObject(i);
+                        String name = object.getString("Name");
+                        String path = object.getString("Path");
+                        BloodBankLocation location = new BloodBankLocation(name,path);
+                        locations.add(location);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                onLoaded.UpdateList(locations);
+            }
+        }.execute();
+    }
+
+
 }

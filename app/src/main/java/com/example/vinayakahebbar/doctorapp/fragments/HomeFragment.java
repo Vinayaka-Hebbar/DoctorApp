@@ -133,6 +133,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         curView = position;
         for(int i=0;i<resources.length;i++){
             dots[i].setTextColor(ContextCompat.getColor(view.getContext(),R.color.dim_white));
+            dots[i].setTextSize(30);
         }
         dots[position].setTextColor(ContextCompat.getColor(view.getContext(),R.color.colorAccent));
         dots[position].setTextSize(34);

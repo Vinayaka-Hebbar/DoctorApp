@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorLocationFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.DoctorsListFragment;
+import com.example.vinayakahebbar.doctorapp.fragments.EmergencyFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HelpFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HomeFragment;
 import com.example.vinayakahebbar.doctorapp.fragments.HospitalFragment;
@@ -100,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FragmentType.HELP:
                 CURRENT_TAG = "Help";
                 return new HelpFragment();
+            case FragmentType.EMERGENCY:
+                CURRENT_TAG = "Emergency Contacts";
+                return new EmergencyFragment();
             case FragmentType.HOSPITAL:
                 CURRENT_TAG = "Hospitals";
                 return new HospitalFragment();
@@ -152,8 +156,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_help:
                 loadFragment(FragmentType.HELP);
                 break;
+            case R.id.menu_emergency:
+                loadFragment(FragmentType.EMERGENCY);
+                break;
             case R.id.menu_share:
-               new ShareDialog(this).show();
+                new ShareDialog(this).show();
                 break;
             case R.id.menu_profile:
                 loadFragment(FragmentType.PROFILE);
@@ -194,24 +201,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!isBackPress)
         {
             switch (currentType){
-                case FragmentType.DOC:
-                    loadFragment(FragmentType.HOME);
-                    break;
+
                 case FragmentType.DOC_LIST:
                     loadFragment(FragmentType.DOC);
-                    break;
-                case FragmentType.HOSPITAL:
-                    loadFragment(FragmentType.HOME);
-                    break;
-                case FragmentType.PROFILE:
-                    loadFragment(FragmentType.HOME);
-                    break;
-                case FragmentType.HELP:
-                    loadFragment(FragmentType.HOME);
                     break;
                 case FragmentType.HOME:
                     Snackbar.make(getCurrentFocus(),"Press again to close",Snackbar.LENGTH_SHORT).show();
                     isBackPress = true;
+                    break;
+                default:
+                    loadFragment(FragmentType.HOME);
                     break;
             }
             return;

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="viewpager_height">180dp</dimen>
     <dimen name="dim_text_multi">150dp</dimen>
+    <dimen name="dim_spinner">250dp</dimen>
 </resources>

@@ -245,11 +245,11 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
         JsonIO jsonIO = new JsonIO(text);
         jsonIO.setOnLoaded(new OnListLoaded() {
             @Override
-            public void Update(List<ModelView> lists) {
+            public void UpdateList(List<ModelView> lists) {
                 if (listListener != null)
                     listListener.updateList(lists, new String[]{curLocation});
+                list = new ArrayList<Hospital>();
                 for (ModelView view : lists) {
-                    list = new ArrayList<Hospital>();
                     Hospital hospital = (Hospital) view;
                     list.add(hospital);
                     googleMap.addMarker(new MarkerOptions()

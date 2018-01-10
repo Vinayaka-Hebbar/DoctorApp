@@ -6,8 +6,7 @@
     android:background="@drawable/health"
     android:gravity="center"
     tools:context="com.example.vinayakahebbar.doctorapp.activities.SplashActivity">
-    <ProgressBar
+    <com.example.vinayakahebbar.doctorapp.views.CircularProgressBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:progressDrawable="@drawable/progress"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>
