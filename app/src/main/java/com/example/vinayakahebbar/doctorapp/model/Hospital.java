@@ -53,5 +53,6 @@ public class Hospital extends ModelView {
         this.address = address;
         this.lat = lat;
         this.lan = lan;
+        setValue(true);
     }
 }

@@ -251,6 +251,7 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
                 list = new ArrayList<Hospital>();
                 for (ModelView view : lists) {
                     Hospital hospital = (Hospital) view;
+                    hospital.setValue(false);
                     list.add(hospital);
                     googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(hospital.getLat(), hospital.getLan())).title(hospital.getName())
@@ -275,7 +276,11 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
         LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_hospital,null);
         final PopupWindow popupWindow = new PopupWindow(popUpView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        final Hospital hospital = tag.isValue()?list.get(Integer.parseInt(tag.toString())):(Hospital) tag;
+        final Hospital hospital = tag.isValue()?(Hospital) tag:list.get(Integer.parseInt(tag.toString()));
+        if(hospital.isValue())
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(hospital.getLat(), hospital.getLan())).title(hospital.getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_hospital)));
         ImageButton buttonClose = (ImageButton) popUpView.findViewById(R.id.btn_popup_close);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
