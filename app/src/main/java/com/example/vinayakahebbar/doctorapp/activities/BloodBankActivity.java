@@ -57,7 +57,7 @@ public class BloodBankActivity extends AppCompatActivity implements OnLoaded, Ad
 
     @Override
     protected void onResume() {
-        showPopUpLoad();
+
         super.onResume();
     }
 
@@ -69,6 +69,7 @@ public class BloodBankActivity extends AppCompatActivity implements OnLoaded, Ad
 
     @Override
     protected void onStart() {
+        showPopUpLoad();
         HttpUtils httpUtils = new HttpUtils();
         httpUtils.setOnLoaded(this);
         httpUtils.getBloodBankLocations();

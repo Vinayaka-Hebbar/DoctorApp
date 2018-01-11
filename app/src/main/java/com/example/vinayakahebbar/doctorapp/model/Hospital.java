@@ -38,6 +38,7 @@ public class Hospital extends ModelView {
     public Hospital(String name, String address) {
         this.name = name;
         this.address = address;
+        setValue(true);
     }
 
     /**

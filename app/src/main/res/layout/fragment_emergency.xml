@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.vinayakahebbar.doctorapp.fragments.EmergencyFragment">
 
-    <!-- TODO: UpdateList blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/lv_emergency"/>
 
 </FrameLayout>

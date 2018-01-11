@@ -14,8 +14,12 @@ import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.adapter.HospitalListAdapter;
 import com.example.vinayakahebbar.doctorapp.interfaces.ListListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.OnListClickListener;
+import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
+import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
+import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
+import com.example.vinayakahebbar.doctorapp.utils.JsonIO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +27,22 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListHospitalFragment extends Fragment implements ListListener, AdapterView.OnItemClickListener {
+public class ListHospitalFragment extends Fragment implements ListListener, AdapterView.OnItemClickListener, OnLoaded, OnListLoaded {
 
     private ListView listView;
     private HospitalListAdapter adapter;
     private View view;
     private List<Hospital> hospitalList;
     private TextView textViewHeader;
+    private HttpUtils httpUtils;
+
 
     private OnListClickListener listClickListener;
     public ListHospitalFragment() {
         // Required empty public constructor
+        httpUtils = new HttpUtils(new String[]{"All"});
+        httpUtils.setOnLoaded(this);
+        httpUtils.getHospitalLocations();
         hospitalList = new ArrayList<>();
     }
 
@@ -53,13 +62,7 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
 
     @Override
     public void updateList(List<ModelView> list,String[] params) {
-        hospitalList.clear();
-        textViewHeader.setText(params[0]);
-        for (ModelView view :
-                list) {
-            hospitalList.add((Hospital) view);
-        }
-        adapter.notifyDataSetChanged();
+
     }
 
     public void setListClickListener(OnListClickListener listClickListener) {
@@ -68,6 +71,24 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        listClickListener.OnClick(new ModelView(Integer.valueOf(position)));
+        listClickListener.OnClick(hospitalList.get(position));
+    }
+
+    @Override
+    public void Update(String text) {
+        JsonIO jsonIO = new JsonIO(text);
+        jsonIO.setOnLoaded(this);
+        jsonIO.getHospitalDetailsFromJson();
+    }
+
+    @Override
+    public void UpdateList(List<ModelView> lists) {
+        hospitalList.clear();
+        textViewHeader.setText(httpUtils.getParam()[0]);
+        for (ModelView view :
+                lists) {
+            hospitalList.add((Hospital) view);
+        }
+        adapter.notifyDataSetChanged();
     }
 }

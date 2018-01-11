@@ -28,7 +28,7 @@ public class LinearProgressDialog extends Dialog {
 
         //Title Bar
         textViewTitle = new TextView(context);
-        textViewTitle.setLayoutParams(new ViewGroup.LayoutParams(375,65));
+        textViewTitle.setLayoutParams(new ViewGroup.LayoutParams(375, ViewGroup.LayoutParams.WRAP_CONTENT));
         textViewTitle.setTextSize(16);
         textViewTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
         textViewTitle.setPadding(10,10,10,10);

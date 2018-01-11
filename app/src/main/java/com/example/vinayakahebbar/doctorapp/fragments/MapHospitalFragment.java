@@ -275,8 +275,7 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
         LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_hospital,null);
         final PopupWindow popupWindow = new PopupWindow(popUpView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        final Hospital hospital = list.get(Integer.parseInt(tag.toString()));
+        final Hospital hospital = tag.isValue()?list.get(Integer.parseInt(tag.toString())):(Hospital) tag;
         ImageButton buttonClose = (ImageButton) popUpView.findViewById(R.id.btn_popup_close);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override

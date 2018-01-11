@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -18,12 +20,17 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:id="@+id/tv_grid_self_care_topic"/>
-            <ProgressBar
-                android:id="@+id/pb_grid_self_care"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:indeterminate="true"
+            <com.example.vinayakahebbar.doctorapp.views.ImageLoaderView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/img_grid_self_care"
+                app:img_height="250"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:id="@+id/tv_grid_self_care_short_desc"/>
         </LinearLayout>
 
 

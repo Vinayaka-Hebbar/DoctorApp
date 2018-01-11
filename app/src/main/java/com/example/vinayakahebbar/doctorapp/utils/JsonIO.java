@@ -141,7 +141,8 @@ public class JsonIO {
                         String topic = object.getString("Topic");
                         String img = HttpUtils.BASE_URL + "SelfCare" + object.getString("Img");
                         String shortDesc = object.getString("ShortDes");
-                        SelfCareModel model = new SelfCareModel(topic,img.replace('\\','/'),shortDesc,"");
+                        String desc = object.getString("Desc");
+                        SelfCareModel model = new SelfCareModel(topic,img.replace('\\','/'),shortDesc,desc);
                         info.add(model);
                     }
                 } catch (JSONException e) {

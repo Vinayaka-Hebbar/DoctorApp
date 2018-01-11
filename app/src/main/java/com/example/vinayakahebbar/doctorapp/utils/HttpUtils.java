@@ -27,6 +27,10 @@ public class HttpUtils {
         this.param = param;
     }
 
+    public String[] getParam() {
+        return param;
+    }
+
     private String[] param;
     private String httpUrl;
 

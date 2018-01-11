@@ -18,15 +18,16 @@ body {font-family: Arial;}
     cursor: pointer;
     padding: 5px 5px;
     transition: 0.3s;
+    padding:5px 12px;
     font-size: 17px;
 }
 
 .tab button:hover {
-    background-color: #ddd;
+    background-color: skyblue;
 }
 
 .tab button.active {
-    background-color: #ccc;
+    background-color: skyblue;
 }
 
 .tabcontent {
@@ -48,21 +49,21 @@ body {font-family: Arial;}
 }
 </style>
 </head>
-<body>
+<body onload="openCity(event, 'Home',false)">
 <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'Home')">Home</button>
-    <button class="tablinks" onclick="openCity(event, 'Hospital')">Hospital</button>
-    <button class="tablinks" onclick="openCity(event, 'Doctor')">Doctor</button>
+    <button class="tablinks active" onclick="openCity(event, 'Home',true)">Home</button>
+    <button class="tablinks" onclick="openCity(event, 'Hospital',true)">Hospital</button>
+    <button class="tablinks" onclick="openCity(event, 'Doctor',true)">Doctor</button>
 </div>
 <div id="Home" class="tabcontent">
     <h3>Home</h3>
-    <p>In homepage four menu are available
+    <p>In homepage four menu are available<br>
     1.Find Hospitals:
-        It shows the locations of various hospitals.
+        It shows the locations of various hospitals.<br>
     2.Find Doctors:
-        It shows the information about the doctors.
+        It shows the information about the doctors.<br>
     3.Find BloodBanks:
-        It shows the details of various BloodBanks in  Bangalore.
+        It shows the details of various BloodBanks in  Bangalore.<br>
     4.Self care:
     It tells about the symptoms, precautions and food diet of that particular disease.</p>
 </div>
@@ -82,15 +83,17 @@ body {font-family: Arial;}
 </div>
 
 <script>
-function openCity(evt, cityName) {
+function openCity(evt, cityName,change) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    if(change){
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
     }
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";

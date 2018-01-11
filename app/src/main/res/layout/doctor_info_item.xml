@@ -25,7 +25,6 @@
             android:textColor="@color/colorAccent"
             android:layout_marginTop="12sp"
             android:layout_toEndOf="@+id/img_doc_list"
-
             />
 
     </RelativeLayout>

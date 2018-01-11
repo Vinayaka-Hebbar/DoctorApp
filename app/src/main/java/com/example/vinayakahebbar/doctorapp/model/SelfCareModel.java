@@ -1,5 +1,8 @@
 package com.example.vinayakahebbar.doctorapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Vinayaka Hebbar on 09-01-2018.
  */
@@ -34,5 +37,9 @@ public class SelfCareModel extends ModelView {
 
     public String getDesc() {
         return desc;
+    }
+
+    public void toArray(){
+        setParams(new String[]{topic,imgUri,shortDes,desc});
     }
 }

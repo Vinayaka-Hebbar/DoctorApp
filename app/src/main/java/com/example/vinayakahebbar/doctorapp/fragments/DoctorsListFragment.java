@@ -85,10 +85,6 @@ public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterVie
         jsonIO.getDoctorsInfo();
     }
 
-    private void loadList() {
-
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Doctor doctor = (Doctor) parent.getItemAtPosition(position);
@@ -107,6 +103,7 @@ public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterVie
         textViewSpec.setText(doctor.getSpecialization());
         TextView textViewInfo = (TextView)popUpView.findViewById(R.id.tv_popup_doc_info);
         textViewInfo.setText(doctor.getInformation());
+        popupWindow.setOutsideTouchable(false);
         popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
     }
 }

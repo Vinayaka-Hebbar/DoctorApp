@@ -53,7 +53,7 @@ public class DoctorListAdapter extends BaseAdapter {
         if(convertView == null) {
             convertView = inflater.inflate(resource, null);
             Doctor doctor = (Doctor)getItem(position);
-            ImageHelper helper = new ImageHelper();
+            ImageHelper helper = new ImageHelper(context);
 
             TextView textViewName = (TextView)convertView.findViewById(R.id.tv_doc_name);
             final ImageView imageView=(ImageView)convertView.findViewById((R.id.img_doc_list));

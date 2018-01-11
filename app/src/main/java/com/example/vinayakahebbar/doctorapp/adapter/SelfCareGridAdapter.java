@@ -2,6 +2,7 @@ package com.example.vinayakahebbar.doctorapp.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
+import com.example.vinayakahebbar.doctorapp.interfaces.AnimationItemClickListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.OnImageLoaded;
 import com.example.vinayakahebbar.doctorapp.model.SelfCareModel;
 import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
 import com.example.vinayakahebbar.doctorapp.utils.ImageHelper;
+import com.example.vinayakahebbar.doctorapp.views.ImageLoaderView;
 
 import java.util.List;
 
@@ -24,11 +27,17 @@ import java.util.List;
  * Created by Vinayaka Hebbar on 09-01-2018.
  */
 
-public class SelfCareGridAdapter extends BaseAdapter {
+public class SelfCareGridAdapter extends BaseAdapter{
     private Context context;
     private int resource;
     private List<SelfCareModel> objects;
     private LayoutInflater inflater;
+
+    public void setItemClickListener(AnimationItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    private AnimationItemClickListener itemClickListener;
 
     public SelfCareGridAdapter(Context context, int resource, List<SelfCareModel> objects) {
         this.context = context;
@@ -48,38 +57,40 @@ public class SelfCareGridAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
     public long getItemId(int position) {
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final SelfCareModel item = getItem(position);
+        if (convertView == null) {
             convertView = inflater.inflate(resource, null);
-            LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_grid_self_care);
-            SelfCareModel item = getItem(position);
-            ImageHelper helper = new ImageHelper();
+        }
+            final LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_grid_self_care);
+
             TextView textViewTopic = (TextView) layout.findViewById(R.id.tv_grid_self_care_topic);
-            TextView textViewShortDesc = new TextView(context);
-            textViewShortDesc.setEllipsize(TextUtils.TruncateAt.END);
-            textViewShortDesc.setMaxLines(3);
-            final ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.pb_grid_self_care);
-            final ImageView imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,250));
-            helper.setOnImageLoaded(new OnImageLoaded() {
-                @Override
-                public void LoadImage(Bitmap bitmap) {
-                    imageView.setImageBitmap(bitmap);
-                    progressBar.setVisibility(View.GONE);
-                }
-            });
-            helper.loadBitmapFromURL(item.getImgUri());
+            final TextView textViewShortDesc = (TextView) layout.findViewById(R.id.tv_grid_self_care_short_desc);
+            final ImageLoaderView imageLoaderView = (ImageLoaderView) layout.findViewById(R.id.img_grid_self_care);
+            imageLoaderView.loadImageWithUri(item.getImgUri());
+            ViewCompat.setTransitionName(imageLoaderView.getImageView(),item.getTopic());
+            ViewCompat.setTransitionName(textViewShortDesc,item.getShortDes());
             textViewTopic.setText(item.getTopic());
             textViewShortDesc.setText(item.getShortDes());
-            layout.addView(imageView);
-            layout.addView(textViewShortDesc);
-        }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.toArray();
+                    item.setIndex(5);
+                    itemClickListener.OnAnimationItemClick(position, item, new View[]{imageLoaderView.getImageView(),textViewShortDesc});
+                }
+            });
+
         return convertView;
     }
 }
