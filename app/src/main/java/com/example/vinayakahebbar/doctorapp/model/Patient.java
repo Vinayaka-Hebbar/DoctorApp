@@ -3,11 +3,14 @@ package com.example.vinayakahebbar.doctorapp.model;
 import com.example.vinayakahebbar.doctorapp.utils.type.Gender;
 import com.example.vinayakahebbar.doctorapp.utils.type.PatientType;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Vinayaka Hebbar on 06-01-2018.
  */
 
-public class Patient {
+public class Patient extends ModelView {
     private int age;
 
     public Patient(int age, String spec,String info, PatientType type, Gender gender) {
@@ -71,6 +74,19 @@ public class Patient {
 
     public Patient(){
 
+    }
+
+    public JSONObject toJsonObject(String name) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject patient = new JSONObject();
+        patient.put("type",type);
+        patient.put("age",age);
+        patient.put("gender",gender);
+        patient.put("info",info);
+        patient.put("specialization",spec);
+        jsonObject.put("name",name);
+        jsonObject.put(name,patient);
+        return jsonObject;
     }
 
     @Override

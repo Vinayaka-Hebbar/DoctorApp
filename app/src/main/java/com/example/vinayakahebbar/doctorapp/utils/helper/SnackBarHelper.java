@@ -26,5 +26,6 @@ public class SnackBarHelper {
         snackbar = Snackbar.make(view,message,duration);
         View snackBarView = snackbar.getView();
         snackBarView.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.red_light));
+        snackbar.show();
     }
 }

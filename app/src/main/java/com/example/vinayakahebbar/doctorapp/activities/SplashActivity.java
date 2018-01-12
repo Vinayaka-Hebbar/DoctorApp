@@ -1,9 +1,9 @@
 package com.example.vinayakahebbar.doctorapp.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.vinayakahebbar.doctorapp.R;
 import com.google.firebase.auth.FirebaseAuth;

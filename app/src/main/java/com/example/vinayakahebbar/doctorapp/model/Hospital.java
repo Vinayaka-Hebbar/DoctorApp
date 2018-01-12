@@ -7,6 +7,7 @@ public class Hospital extends ModelView {
     private double lan;
     private String name;
     private String address;
+    private String imgUrl;
 
 
     public String getName() {
@@ -54,5 +55,13 @@ public class Hospital extends ModelView {
         this.lat = lat;
         this.lan = lan;
         setValue(true);
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

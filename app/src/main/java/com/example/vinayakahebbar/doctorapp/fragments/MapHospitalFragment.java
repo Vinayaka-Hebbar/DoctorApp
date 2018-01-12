@@ -1,9 +1,12 @@
 package com.example.vinayakahebbar.doctorapp.fragments;
 
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,7 +15,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.UiThread;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,9 +35,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.vinayakahebbar.doctorapp.R;
+import com.example.vinayakahebbar.doctorapp.interfaces.JsonListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.ListListener;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
+import com.example.vinayakahebbar.doctorapp.interfaces.NetworkListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.OnUpdateMap;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
@@ -44,10 +49,13 @@ import com.example.vinayakahebbar.doctorapp.model.direction.StepsObject;
 import com.example.vinayakahebbar.doctorapp.utils.GsonRequest;
 import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
 import com.example.vinayakahebbar.doctorapp.utils.JsonIO;
+import com.example.vinayakahebbar.doctorapp.utils.dialogs.NotifyDialog;
 import com.example.vinayakahebbar.doctorapp.utils.direction.DirectionHelper;
 import com.example.vinayakahebbar.doctorapp.utils.direction.MapRouteDrawer;
+import com.example.vinayakahebbar.doctorapp.utils.helper.SnackBarHelper;
 import com.example.vinayakahebbar.doctorapp.utils.polyline.PolyDecoder;
 import com.example.vinayakahebbar.doctorapp.utils.volley.VolleySingleton;
+import com.example.vinayakahebbar.doctorapp.views.ImageLoaderView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -69,7 +77,7 @@ import java.util.Locale;
  * A simple {@link Fragment} subclass.
  */
 public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,LocationListener,
-        OnUpdateMap, OnLoaded, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveStartedListener {
+        OnUpdateMap, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveStartedListener, NetworkListener, JsonListener {
 
     GoogleMap googleMap;
     private LocationManager locationManager;
@@ -185,10 +193,43 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
         this.googleMap.getUiSettings().setMapToolbarEnabled(false);
         this.googleMap.getUiSettings().setMyLocationButtonEnabled(true);
         this.googleMap.setOnMarkerClickListener(this);
-        if (ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        checkPermissions();
+    }
+
+    private void checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0, this);
+            else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, this);
+        } else {
+            NotifyDialog dialog = new NotifyDialog(view.getContext());
+            dialog.setClickListener(new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            dialog.show("Enable Location Setting", "Ok");
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
+                    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0, this);
+                else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, this);
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -235,32 +276,9 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
             googleMap.addMarker(new MarkerOptions().position(curLatLan).title(text).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curLatLan, 15));
         }
-        HttpUtils httpUtils = new HttpUtils(new String[]{text});
-        httpUtils.setOnLoaded(this);
+        HttpUtils httpUtils = new HttpUtils(new String[]{text})
+                .setOnLoaded(this);
         httpUtils.getHospitalLocations();
-    }
-
-    @Override
-    public void Update(String text) {
-        JsonIO jsonIO = new JsonIO(text);
-        jsonIO.setOnLoaded(new OnListLoaded() {
-            @Override
-            public void UpdateList(List<ModelView> lists) {
-                if (listListener != null)
-                    listListener.updateList(lists, new String[]{curLocation});
-                list = new ArrayList<Hospital>();
-                for (ModelView view : lists) {
-                    Hospital hospital = (Hospital) view;
-                    hospital.setValue(false);
-                    list.add(hospital);
-                    googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(hospital.getLat(), hospital.getLan())).title(hospital.getName())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_hospital))).setTag(list.size() - 1);
-                }
-
-            }
-        });
-        jsonIO.getHospitalDetailsFromJson();
     }
 
     @Override
@@ -296,6 +314,8 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
                 popupWindow.dismiss();
             }
         });
+        ImageLoaderView imageLoaderView = (ImageLoaderView)popUpView.findViewById(R.id.img_popup_hospital);
+        imageLoaderView.loadImageWithUri(hospital.getImgUrl());
         TextView textViewName = (TextView)popUpView.findViewById(R.id.tv_popup_name);
         textViewName.setText(hospital.getName());
         TextView textView = (TextView)popUpView.findViewById(R.id.tv_popup_address);
@@ -304,19 +324,21 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void getDirection(LatLng latLng) {
-        String url = DirectionHelper.getUrl(curLatLan, latLng);
-        GsonRequest<DirectionObject> gsonRequest = new GsonRequest<DirectionObject>(
-                Request.Method.GET,
-                url, DirectionObject.class,
-                createRequestSuccessListener(),
-                createRequestErrorListener()
-        );
-        gsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                DirectionHelper.SOCKET_TIMEOUT,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-        VolleySingleton.getInstance(view.getContext()).addToRequestQueue(gsonRequest);
+        if(curLocation != null) {
+            String url = DirectionHelper.getUrl(curLatLan, latLng);
+            GsonRequest<DirectionObject> gsonRequest = new GsonRequest<DirectionObject>(
+                    Request.Method.GET,
+                    url, DirectionObject.class,
+                    createRequestSuccessListener(),
+                    createRequestErrorListener()
+            );
+            gsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    DirectionHelper.SOCKET_TIMEOUT,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            VolleySingleton.getInstance(view.getContext()).addToRequestQueue(gsonRequest);
+        }
     }
 
     private Response.Listener<DirectionObject> createRequestSuccessListener() {
@@ -376,6 +398,38 @@ public class MapHospitalFragment extends Fragment implements OnMapReadyCallback,
 
     public void setListListener(ListListener listListener) {
         this.listListener = listListener;
+    }
+
+    @Override
+    public void onLoaded(String response) {
+        JsonIO jsonIO = new JsonIO(response)
+                .setOnLoaded(this);
+        jsonIO.getHospitalDetailsFromJson();
+    }
+
+    @Override
+    public void onNetworkError(String error) {
+        new SnackBarHelper(view,error, Snackbar.LENGTH_SHORT).showError();
+    }
+
+    @Override
+    public void onParsed(List<ModelView> lists) {
+        if (listListener != null)
+            listListener.updateList(lists, new String[]{curLocation});
+        list = new ArrayList<Hospital>();
+        for (ModelView view : lists) {
+            Hospital hospital = (Hospital) view;
+            hospital.setValue(false);
+            list.add(hospital);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(hospital.getLat(), hospital.getLan())).title(hospital.getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_hospital))).setTag(list.size() - 1);
+        }
+    }
+
+    @Override
+    public void onParseError(String error) {
+
     }
 }
 

@@ -3,6 +3,7 @@ package com.example.vinayakahebbar.doctorapp.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,15 @@ import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.adapter.HospitalListAdapter;
+import com.example.vinayakahebbar.doctorapp.interfaces.JsonListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.ListListener;
+import com.example.vinayakahebbar.doctorapp.interfaces.NetworkListener;
 import com.example.vinayakahebbar.doctorapp.interfaces.OnListClickListener;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
 import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
 import com.example.vinayakahebbar.doctorapp.utils.JsonIO;
+import com.example.vinayakahebbar.doctorapp.utils.helper.SnackBarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListHospitalFragment extends Fragment implements ListListener, AdapterView.OnItemClickListener, OnLoaded, OnListLoaded {
+public class ListHospitalFragment extends Fragment implements AdapterView.OnItemClickListener, NetworkListener, JsonListener,ListListener {
 
     private ListView listView;
     private HospitalListAdapter adapter;
@@ -40,9 +42,6 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
     private OnListClickListener listClickListener;
     public ListHospitalFragment() {
         // Required empty public constructor
-        httpUtils = new HttpUtils(new String[]{"All"});
-        httpUtils.setOnLoaded(this);
-        httpUtils.getHospitalLocations();
         hospitalList = new ArrayList<>();
     }
 
@@ -61,8 +60,11 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
     }
 
     @Override
-    public void updateList(List<ModelView> list,String[] params) {
-
+    public void onStart() {
+        httpUtils = new HttpUtils(new String[]{"All"});
+        httpUtils.setOnLoaded(this);
+        httpUtils.getHospitalLocations();
+        super.onStart();
     }
 
     public void setListClickListener(OnListClickListener listClickListener) {
@@ -74,15 +76,22 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
         listClickListener.OnClick(hospitalList.get(position));
     }
 
+
+
     @Override
-    public void Update(String text) {
-        JsonIO jsonIO = new JsonIO(text);
+    public void onLoaded(String response) {
+        JsonIO jsonIO = new JsonIO(response);
         jsonIO.setOnLoaded(this);
         jsonIO.getHospitalDetailsFromJson();
     }
 
     @Override
-    public void UpdateList(List<ModelView> lists) {
+    public void onNetworkError(String error) {
+        new SnackBarHelper(view,error, Snackbar.LENGTH_SHORT).showError();
+    }
+
+    @Override
+    public void onParsed(List<ModelView> lists) {
         hospitalList.clear();
         textViewHeader.setText(httpUtils.getParam()[0]);
         for (ModelView view :
@@ -90,5 +99,15 @@ public class ListHospitalFragment extends Fragment implements ListListener, Adap
             hospitalList.add((Hospital) view);
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onParseError(String error) {
+
+    }
+
+    @Override
+    public void updateList(List<ModelView> list, String[] params) {
+
     }
 }

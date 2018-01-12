@@ -4,6 +4,7 @@ package com.example.vinayakahebbar.doctorapp.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,14 @@ import android.widget.TextView;
 
 import com.example.vinayakahebbar.doctorapp.R;
 import com.example.vinayakahebbar.doctorapp.adapter.DoctorListAdapter;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
+import com.example.vinayakahebbar.doctorapp.interfaces.JsonListener;
+import com.example.vinayakahebbar.doctorapp.interfaces.NetworkListener;
 import com.example.vinayakahebbar.doctorapp.model.Doctor;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
 import com.example.vinayakahebbar.doctorapp.utils.FragmentParam;
 import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
 import com.example.vinayakahebbar.doctorapp.utils.JsonIO;
+import com.example.vinayakahebbar.doctorapp.utils.helper.SnackBarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterView.OnItemClickListener {
+public class DoctorsListFragment extends Fragment implements NetworkListener,AdapterView.OnItemClickListener, JsonListener {
 
     private List<Doctor> doctors;
     private View view;
@@ -72,20 +74,6 @@ public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterVie
     }
 
     @Override
-    public void Update(String text) {
-        JsonIO jsonIO =  new JsonIO(text);
-        jsonIO.setOnLoaded(new OnListLoaded() {
-            @Override
-            public void UpdateList(List<ModelView> lists) {
-                for(ModelView view:lists)
-                    doctors.add((Doctor)view);
-                adapter.notifyDataSetChanged();
-            }
-        });
-        jsonIO.getDoctorsInfo();
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Doctor doctor = (Doctor) parent.getItemAtPosition(position);
         View popUpView = inflater.inflate(R.layout.popup_doctor,null);
@@ -105,5 +93,29 @@ public class DoctorsListFragment extends Fragment implements OnLoaded,AdapterVie
         textViewInfo.setText(doctor.getInformation());
         popupWindow.setOutsideTouchable(false);
         popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
+    }
+
+    @Override
+    public void onNetworkError(String error) {
+        new SnackBarHelper(view,error, Snackbar.LENGTH_SHORT).showError();
+    }
+
+    @Override
+    public void onLoaded(String response) {
+        JsonIO jsonIO =  new JsonIO(response);
+        jsonIO.setOnLoaded(this);
+        jsonIO.getDoctorsInfo();
+    }
+
+    @Override
+    public void onParsed(List<ModelView> lists) {
+        for(ModelView view:lists)
+            doctors.add((Doctor)view);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onParseError(String error) {
+
     }
 }

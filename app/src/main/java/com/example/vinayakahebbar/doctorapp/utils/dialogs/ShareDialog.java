@@ -25,14 +25,11 @@ public class ShareDialog {
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "My app name");
-                    String strShareMessage = "\nLet me recommend you this application\n\n";
-                    strShareMessage = strShareMessage + "https://play.google.com/store/apps/details?id=" + context.getPackageName();
-                    Uri screenshotUri = Uri.parse("android.resource://packagename/drawable/image_name");
-                    i.setType("image/png");
-                    i.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-                    i.putExtra(Intent.EXTRA_TEXT, strShareMessage);
-                   context.startActivity(Intent.createChooser(i, "Share via"));
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Doctor App");
+                    String sAux = "\nLet me recommend you this application\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + context.getPackageName();
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    context.startActivity(Intent.createChooser(i, "Choose one"));
                 } catch(Exception e) {
                     //e.toString();
                 }

@@ -31,6 +31,12 @@
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:id="@+id/tv_grid_self_care_short_desc"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:padding="2sp"
+                android:text="See more"/>
         </LinearLayout>
 
 

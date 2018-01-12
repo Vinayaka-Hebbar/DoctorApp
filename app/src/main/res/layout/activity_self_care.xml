@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_grid_self_care"
     tools:context="com.example.vinayakahebbar.doctorapp.activities.SelfCareActivity">
     <GridView
         android:layout_width="match_parent"

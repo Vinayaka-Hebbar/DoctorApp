@@ -3,15 +3,17 @@ package com.example.vinayakahebbar.doctorapp.utils;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.example.vinayakahebbar.doctorapp.interfaces.OnListLoaded;
-import com.example.vinayakahebbar.doctorapp.interfaces.OnLoaded;
+import com.example.vinayakahebbar.doctorapp.interfaces.JsonListener;
 import com.example.vinayakahebbar.doctorapp.model.BloodBank;
 import com.example.vinayakahebbar.doctorapp.model.BloodBankLocation;
 import com.example.vinayakahebbar.doctorapp.model.Doctor;
 import com.example.vinayakahebbar.doctorapp.model.DoctorLocation;
 import com.example.vinayakahebbar.doctorapp.model.Hospital;
 import com.example.vinayakahebbar.doctorapp.model.ModelView;
+import com.example.vinayakahebbar.doctorapp.model.Patient;
 import com.example.vinayakahebbar.doctorapp.model.SelfCareModel;
+import com.example.vinayakahebbar.doctorapp.utils.type.Gender;
+import com.example.vinayakahebbar.doctorapp.utils.type.PatientType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,11 +27,17 @@ public class JsonIO {
         this.jsonString = jsonString;
     }
 
-    public void setOnLoaded(OnListLoaded onLoaded) {
-        this.onLoaded = onLoaded;
+    public JsonIO setOnLoaded(JsonListener listener) {
+        this.listener = listener;
+        return this;
     }
 
-    private OnListLoaded onLoaded;
+    public JsonIO setListener(JsonListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    private JsonListener listener;
 
     private String jsonString;
 
@@ -46,9 +54,11 @@ public class JsonIO {
                         JSONObject object = array.getJSONObject(i);
                         String name = object.getString("Name");
                         String address = object.getString("Address");
+                        String imgUrl = object.getString("ImgPath");
                         double lan = Double.parseDouble(object.getString("Lan"));
                         double lat = Double.parseDouble(object.getString("Lat"));
                         Hospital location = new Hospital(name,address,lat,lan);
+                        location.setImgUrl(HttpUtils.BASE_URL + "Hospital" + imgUrl.replace('\\','/'));
                         locations.add(location);
                     }
                 } catch (JSONException e) {
@@ -59,7 +69,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(locations);
+                listener.onParsed(locations);
             }
         }.execute();
     }
@@ -94,7 +104,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(doctors);
+                listener.onParsed(doctors);
             }
         }.execute();
     }
@@ -123,7 +133,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(locations);
+                listener.onParsed(locations);
             }
         }.execute();
     }
@@ -153,7 +163,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(info);
+                listener.onParsed(info);
             }
         }.execute();
     }
@@ -184,7 +194,7 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(info);
+                listener.onParsed(info);
             }
         }.execute();
     }
@@ -213,10 +223,43 @@ public class JsonIO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                onLoaded.UpdateList(locations);
+                listener.onParsed(locations);
+            }
+        }.execute();
+    }
+
+    public void getPatientInfo(){
+        final List<ModelView> users = new ArrayList<>();
+        new AsyncTask<Void, Integer, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if(TextUtils.isEmpty(jsonString))return null;
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    int age = jsonObject.getInt("age");
+                    String info = jsonObject.getString("info");
+                    Gender gender = Gender.valueOf(jsonObject.getString("gender"));
+                    PatientType type = PatientType.valueOf(jsonObject.getString("type"));
+                    String spec = jsonObject.getString("specialization");
+                    Patient patient = new Patient(age,spec,info,type,gender);
+                    users.add(patient);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                if(aVoid == null)
+                    listener.onParseError("Empty");
+                listener.onParsed(users);
             }
         }.execute();
     }
 
 
+    public JsonListener getListener() {
+        return listener;
+    }
 }

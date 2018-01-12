@@ -17,7 +17,9 @@ public class EmergencyStorage {
     }
 
     public List<EmergencyContact> getContactList(){
-        contactList.add(new EmergencyContact("Contect Name",12345));
+        contactList.add(new EmergencyContact("Sanjeevini Ambulance Service",9448496666L));
+        contactList.add(new EmergencyContact("VMEDO Ambulance Service",9343180000L));
+        contactList.add(new EmergencyContact("Yashaswini Ambulance Service",9632966665L));
         return contactList;
     }
 }

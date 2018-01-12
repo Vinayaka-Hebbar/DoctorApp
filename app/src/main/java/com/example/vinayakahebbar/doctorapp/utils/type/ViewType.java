@@ -1,5 +1,7 @@
 package com.example.vinayakahebbar.doctorapp.utils.type;
 
+import android.view.View;
+
 /**
  * Created by Vinayaka Hebbar on 07-01-2018.
  */

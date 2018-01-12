@@ -198,6 +198,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(navigationView))
+        {
+            drawerLayout.closeDrawers();
+            return;
+        }
         if(!isBackPress)
         {
             switch (currentType){

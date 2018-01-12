@@ -8,7 +8,7 @@ public class EmergencyContact {
     private String name;
     private long PhNo;
 
-    public EmergencyContact(String name, int phNo) {
+    public EmergencyContact(String name, long phNo) {
         this.name = name;
         PhNo = phNo;
     }

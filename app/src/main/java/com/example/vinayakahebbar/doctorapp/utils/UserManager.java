@@ -2,6 +2,7 @@ package com.example.vinayakahebbar.doctorapp.utils;
 
 import android.support.annotation.NonNull;
 
+import com.example.vinayakahebbar.doctorapp.shared.DoctorApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -15,6 +16,7 @@ public class UserManager {
     }
     public static void sigOut(){
         auth.signOut();
+        DoctorApp.invalidate();
     }
 
     public static String getUserName(){

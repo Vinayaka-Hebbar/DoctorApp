@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.vinayakahebbar.doctorapp.R;
 
@@ -23,6 +24,7 @@ public class RateUsDialog {
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context,"Thank you",Toast.LENGTH_SHORT).show();
             }
         });
 

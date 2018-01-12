@@ -156,7 +156,12 @@
                 android:background="@drawable/border_accent"
                 android:hint=" Please type your health issue in detail."
                 android:textSize="18sp"/>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Specialization"
+                android:textSize="20sp"
+                android:padding="5sp"/>
 
             <Spinner
                 android:layout_width="match_parent"

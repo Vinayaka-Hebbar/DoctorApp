@@ -4,9 +4,8 @@ package com.example.vinayakahebbar.doctorapp.fragments;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,25 +16,30 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.vinayakahebbar.doctorapp.R;
+import com.example.vinayakahebbar.doctorapp.interfaces.JsonListener;
+import com.example.vinayakahebbar.doctorapp.interfaces.NetworkListener;
+import com.example.vinayakahebbar.doctorapp.model.ModelView;
 import com.example.vinayakahebbar.doctorapp.model.Patient;
-import com.example.vinayakahebbar.doctorapp.utils.helper.NetworkHelper;
+import com.example.vinayakahebbar.doctorapp.shared.DoctorApp;
+import com.example.vinayakahebbar.doctorapp.utils.HttpUtils;
+import com.example.vinayakahebbar.doctorapp.utils.JsonIO;
 import com.example.vinayakahebbar.doctorapp.utils.UserManager;
 import com.example.vinayakahebbar.doctorapp.utils.helper.SnackBarHelper;
 import com.example.vinayakahebbar.doctorapp.utils.type.Gender;
 import com.example.vinayakahebbar.doctorapp.utils.type.PatientType;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements ValueEventListener, View.OnClickListener,
-        AdapterView.OnItemSelectedListener {
+public class ProfileFragment extends Fragment implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener, JsonListener, NetworkListener {
 
     private EditText editTextAge;
     private Button buttonSubmit;
@@ -43,13 +47,16 @@ public class ProfileFragment extends Fragment implements ValueEventListener, Vie
     private RadioGroup radioGroupPatient;
     private RadioGroup radioGroupGender;
     private Spinner spinnerSpec;
+    private String[] array;
+    private List<String> stringList;
     private ProgressDialog dialog;
-    private DatabaseReference databaseReference;
     private EditText editTextInfo;
     private View view;
     private String spec;
+    private String uid;
     public ProfileFragment() {
         // Required empty public constructor
+        uid = UserManager.getUserId();
     }
 
 
@@ -63,58 +70,75 @@ public class ProfileFragment extends Fragment implements ValueEventListener, Vie
         editTextInfo = (EditText)view.findViewById(R.id.et_patient_info);
         radioGroupPatient = (RadioGroup)view.findViewById(R.id.rg_profile_patient);
         radioGroupGender = (RadioGroup)view.findViewById(R.id.rg_profile_gender);
+        array = view.getContext().getResources().getStringArray(R.array.specialities);
+        stringList = Arrays.asList(array);
         spinnerSpec = (Spinner)view.findViewById(R.id.spinner_profile);
         dialog = new ProgressDialog(view.getContext());
         dialog.setCancelable(false);
         dialog.setMessage("Fetching..");
-        dialog.show();
         spinnerSpec.setOnItemSelectedListener(this);
         buttonSubmit.setOnClickListener(this);
-        setUpDatabase();
         return view;
     }
 
-    private void setUpDatabase() {
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("users");
-        if (NetworkHelper.isNetworkAvailable(view.getContext()))
-            databaseReference.child(UserManager.getUserId()).addValueEventListener(this);
-        else
-
-            new SnackBarHelper(view,"Internet error",Snackbar.LENGTH_SHORT).showError();
-    }
 
     @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        Patient value = dataSnapshot.getValue(Patient.class);
-        if (value != null){
-            editTextAge.setText(String.valueOf(value.getAge()));
-            editTextInfo.setText(value.getInfo());
-            switch (value.getGender()){
-                case MALE:radioGroupGender.check(R.id.rb_profile_male);
-                    break;
-                case FEMALE:
-                    radioGroupGender.check(R.id.rb_profile_female);
-                    break;
-            }
+    public void onStart() {
+        if (!DoctorApp.isSet("patient")) {
+            HttpUtils httpUtils = new HttpUtils(new String[]{"Users", "retrieve.php"})
+                    .setOnLoaded(this);
+            httpUtils.sendJsonObject(uid);
+            dialog.show();
+        } else
+            loadPatientDetails();
+        super.onStart();
+    }
+
+    private void loadPatientDetails() {
+        Patient patient = DoctorApp.patient;
+        editTextAge.setText(String.valueOf(patient.getAge()));
+        editTextInfo.setText(patient.getInfo());
+        switch (patient.getGender()){
+            case MALE:
+                radioGroupGender.check(R.id.rb_profile_male);
+                break;
+            case FEMALE:
+                radioGroupGender.check(R.id.rb_profile_female);
+                break;
         }
-        dialog.dismiss();
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-        dialog.dismiss();
-        Snackbar snackbar = Snackbar.make(view,databaseError.getMessage(),Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.red_light));
-        snackbar.show();
+        switch (patient.getType()){
+            case ME:
+                radioGroupPatient.check(R.id.rb_profile_pnt_1);
+                break;
+            case HUSBAND:
+                radioGroupPatient.check(R.id.rb_profile_pnt_2);
+                break;
+            case WIFE:
+                radioGroupPatient.check(R.id.rb_profile_pnt_3);
+                break;
+            case FATHER:
+                radioGroupPatient.check(R.id.rb_profile_pnt_4);
+                break;
+            case MOTHER:
+                radioGroupPatient.check(R.id.rb_profile_pnt_5);
+                break;
+            case DAUGHTER:
+                radioGroupPatient.check(R.id.rb_profile_pnt_6);
+                break;
+            case SON:
+                radioGroupPatient.check(R.id.rb_profile_pnt_7);
+                break;
+            case OTHERS:
+                radioGroupPatient.check(R.id.rb_profile_pnt_8);
+                break;
+        }
+        spinnerSpec.setSelection(stringList.indexOf(patient.getSpec()));
     }
 
     @Override
     public void onClick(View v) {
         int age = Integer.parseInt(editTextAge.getText().toString());
         String info = editTextInfo.getText().toString();
-        String uid = UserManager.getUserId();
         Gender gender = Gender.NONE;
         int genderId = radioGroupGender.getCheckedRadioButtonId();
         switch (genderId) {
@@ -127,7 +151,7 @@ public class ProfileFragment extends Fragment implements ValueEventListener, Vie
         }
         PatientType type = PatientType.ME;
         int patientId = radioGroupPatient.getCheckedRadioButtonId();
-        switch (patientId){
+        switch (patientId) {
             case R.id.rb_profile_pnt_1:
                 type = PatientType.ME;
                 break;
@@ -153,15 +177,28 @@ public class ProfileFragment extends Fragment implements ValueEventListener, Vie
                 type = PatientType.OTHERS;
                 break;
         }
-        Patient patient = new Patient(age,spec,info,type,gender);
+        DoctorApp.setValue("Hello","hello", TypedValue.TYPE_STRING);
+        DoctorApp.patient = new Patient(age, spec, info, type, gender);
         dialog.setMessage("Saving");
         dialog.show();
-        databaseReference.child(uid).setValue(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
+        HttpUtils httpUtils = new HttpUtils(new String[]{"Users", "store.php"});
+        httpUtils.setOnLoaded(new NetworkListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onLoaded(String response) {
+                DoctorApp.setValue("patient", "true", TypedValue.TYPE_INT_BOOLEAN);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onNetworkError(String error) {
                 dialog.dismiss();
             }
         });
+        try {
+            httpUtils.sendJsonObject(DoctorApp.patient.toJsonObject(uid));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -172,5 +209,33 @@ public class ProfileFragment extends Fragment implements ValueEventListener, Vie
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onParsed(List<ModelView> lists) {
+        if(lists.size() > 0) {
+            DoctorApp.patient = (Patient) lists.get(0);
+            DoctorApp.setValue("patient", "true", TypedValue.TYPE_INT_BOOLEAN);
+            loadPatientDetails();
+        }
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onParseError(String error) {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onLoaded(String response) {
+        JsonIO jsonIO = new JsonIO(response)
+                .setOnLoaded(this);
+        jsonIO.getPatientInfo();
+    }
+
+    @Override
+    public void onNetworkError(String error) {
+        dialog.dismiss();
+        new SnackBarHelper(view,error, Snackbar.LENGTH_SHORT).showError();
     }
 }

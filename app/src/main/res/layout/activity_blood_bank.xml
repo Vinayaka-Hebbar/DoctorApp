@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/layout_blood_bank"
     tools:context="com.example.vinayakahebbar.doctorapp.activities.BloodBankActivity">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
