@@ -7,5 +7,5 @@ import android.graphics.Bitmap;
  */
 
 public interface OnImageLoaded {
-    public void LoadImage(Bitmap bitmap);
+    void LoadImage(Bitmap bitmap);
 }

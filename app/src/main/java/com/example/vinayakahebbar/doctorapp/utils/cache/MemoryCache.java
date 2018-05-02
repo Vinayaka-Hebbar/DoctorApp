@@ -77,7 +77,7 @@ public class MemoryCache {
         }
     }
 
-    long getSizeInBytes(Bitmap bitmap) {
+    private long getSizeInBytes(Bitmap bitmap) {
         if(bitmap==null)
             return 0;
         return bitmap.getRowBytes() * bitmap.getHeight();
